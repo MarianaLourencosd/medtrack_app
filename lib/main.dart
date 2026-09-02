@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'themes/app_theme.dart';
-import 'screens/home_screen.dart';
+import 'widgets/login/login_screen.dart';
 import 'firebase_options.dart';
 
 void main() async {
@@ -18,7 +18,7 @@ class MedTrackApp extends StatelessWidget {
     return MaterialApp(
       title: 'MedTrack',
       theme: AppTheme.lightTheme,
-      home: const HomeScreen(),
+      home: const LoginScreen(),
       debugShowCheckedModeBanner: false,
     );
   }

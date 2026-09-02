@@ -11,7 +11,7 @@ import '../widgets/home/home_footer.dart';
 import '../widgets/shared/section_title.dart';
 import '../constants/colors.dart';
 import '../services/auth_service.dart';
-import '../screens/login_screen.dart';
+import '../widgets/login/login_screen.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
