@@ -21,6 +21,7 @@ class AuthService {
       'nome': nome.trim(),
       'email': email.trim(),
       'cpf': cpf.trim(),
+      'formularioPreenchido': false,
     });
   }
 

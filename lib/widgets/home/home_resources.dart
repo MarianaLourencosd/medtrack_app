@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 import '../../constants/colors.dart';
-import '../shared/resource_card.dart';
 
 class HomeResources extends StatelessWidget {
+  final bool isLoggedIn;
   final Function(String) onNavigate;
 
   const HomeResources({
     super.key,
+    required this.isLoggedIn,
     required this.onNavigate,
   });
 
@@ -46,7 +47,7 @@ class HomeResources extends StatelessWidget {
                     borderRadius: BorderRadius.circular(10),
                   ),
                   child: const Icon(
-                    Icons.favorite,
+                    Icons.grid_view,
                     color: AppColors.primary,
                     size: 20,
                   ),
@@ -72,37 +73,107 @@ class HomeResources extends StatelessWidget {
               ],
             ),
             const SizedBox(height: 12),
-            ResourceCard(
-              icon: Icons.monitor_weight,
-              title: 'Calcular IMC',
-              description: 'Descubra seu Índice de Massa Corporal',
-              color: Colors.teal,
-              onTap: () => onNavigate('IMC'),
+            Column(
+              children: [
+                _buildResourceItem(
+                  icon: Icons.fitness_center,
+                  label: 'IMC',
+                  color: AppColors.primary,
+                  route: 'IMC',
+                ),
+                const SizedBox(height: 8),
+                _buildResourceItem(
+                  icon: Icons.emergency,
+                  label: 'Emergência',
+                  color: AppColors.primary,
+                  route: 'Emergência',
+                ),
+                const SizedBox(height: 8),
+                _buildResourceItem(
+                  icon: Icons.local_hospital,
+                  label: 'Hospitais',
+                  color: AppColors.primary,
+                  route: 'Hospitais',
+                ),
+                const SizedBox(height: 8),
+                _buildResourceItem(
+                  icon: Icons.phone,
+                  label: 'Contato',
+                  color: AppColors.primary,
+                  route: 'Contato',
+                ),
+              ],
             ),
-            const SizedBox(height: 10),
-            ResourceCard(
-              icon: Icons.emergency,
-              title: 'Emergência',
-              description: 'Contatos e números importantes',
-              color: Colors.red,
-              onTap: () => onNavigate('Emergência'),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildResourceItem({
+    required IconData icon,
+    required String label,
+    required Color color,
+    required String route,
+  }) {
+    return GestureDetector(
+      onTap: () => onNavigate(route),
+      child: Container(
+        padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 12),
+        decoration: BoxDecoration(
+          gradient: LinearGradient(
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
+            colors: [
+              color.withValues(alpha: 0.06),
+              color.withValues(alpha: 0.02),
+            ],
+          ),
+          borderRadius: BorderRadius.circular(12),
+          border: Border.all(color: color.withValues(alpha: 0.12)),
+        ),
+        child: Row(
+          children: [
+            Container(
+              padding: const EdgeInsets.all(8),
+              decoration: BoxDecoration(
+                color: color.withValues(alpha: 0.12),
+                shape: BoxShape.circle,
+              ),
+              child: Icon(icon, color: color, size: 22),
             ),
-            const SizedBox(height: 10),
-            ResourceCard(
-              icon: Icons.local_hospital,
-              title: 'Hospitais Próximos',
-              description: 'Encontre hospitais perto de você',
-              color: AppColors.primary,
-              onTap: () => onNavigate('Hospitais'),
+            const SizedBox(width: 12),
+            Expanded(
+              child: Text(
+                label,
+                style: TextStyle(
+                  fontSize: 14,
+                  fontWeight: FontWeight.w600,
+                  color: AppColors.textPrimary,
+                ),
+              ),
             ),
-            const SizedBox(height: 10),
-            ResourceCard(
-              icon: Icons.phone,
-              title: 'Contato de Emergência',
-              description: 'Adicione ou veja seus contatos',
-              color: Colors.orange,
-              onTap: () => onNavigate('Contato'),
-            ),
+            if (isLoggedIn)
+              Icon(
+                Icons.arrow_forward_ios,
+                color: Colors.grey.shade400,
+                size: 16,
+              )
+            else
+              Container(
+                padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+                decoration: BoxDecoration(
+                  color: Colors.grey.shade200,
+                  borderRadius: BorderRadius.circular(12),
+                ),
+                child: const Text(
+                  '🔒',
+                  style: TextStyle(
+                    fontSize: 14,
+                    color: Colors.grey,
+                  ),
+                ),
+              ),
           ],
         ),
       ),

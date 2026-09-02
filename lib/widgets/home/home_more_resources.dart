@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 import '../../constants/colors.dart';
-import '../shared/resource_card.dart';
 
 class HomeMoreResources extends StatelessWidget {
+  final bool isLoggedIn;
   final Function(String) onNavigate;
 
   const HomeMoreResources({
     super.key,
+    required this.isLoggedIn,
     required this.onNavigate,
   });
 
@@ -72,37 +73,107 @@ class HomeMoreResources extends StatelessWidget {
               ],
             ),
             const SizedBox(height: 12),
-            ResourceCard(
-              icon: Icons.bloodtype,
-              title: 'Meu Tipo Sanguíneo',
-              description: 'A+, O-, AB+, etc.',
-              color: Colors.red.shade300,
-              onTap: () => onNavigate('Tipo Sanguíneo'),
+            Column(
+              children: [
+                _buildResourceItem(
+                  icon: Icons.bloodtype,
+                  label: 'Tipo Sanguíneo',
+                  color: AppColors.primary,
+                  route: 'Tipo Sanguíneo',
+                ),
+                const SizedBox(height: 8),
+                _buildResourceItem(
+                  icon: Icons.healing,
+                  label: 'Alergias',
+                  color: AppColors.primary,
+                  route: 'Alergias',
+                ),
+                const SizedBox(height: 8),
+                _buildResourceItem(
+                  icon: Icons.medical_services,
+                  label: 'Plano de Saúde',
+                  color: AppColors.primary,
+                  route: 'Plano de Saúde',
+                ),
+                const SizedBox(height: 8),
+                _buildResourceItem(
+                  icon: Icons.person,
+                  label: 'Perfil',
+                  color: AppColors.primary,
+                  route: 'Perfil',
+                ),
+              ],
             ),
-            const SizedBox(height: 10),
-            ResourceCard(
-              icon: Icons.healing,
-              title: 'Minhas Alergias',
-              description: 'Registre suas alergias',
-              color: Colors.pink,
-              onTap: () => onNavigate('Alergias'),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildResourceItem({
+    required IconData icon,
+    required String label,
+    required Color color,
+    required String route,
+  }) {
+    return GestureDetector(
+      onTap: () => onNavigate(route),
+      child: Container(
+        padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 12),
+        decoration: BoxDecoration(
+          gradient: LinearGradient(
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
+            colors: [
+              color.withValues(alpha: 0.06),
+              color.withValues(alpha: 0.02),
+            ],
+          ),
+          borderRadius: BorderRadius.circular(12),
+          border: Border.all(color: color.withValues(alpha: 0.12)),
+        ),
+        child: Row(
+          children: [
+            Container(
+              padding: const EdgeInsets.all(8),
+              decoration: BoxDecoration(
+                color: color.withValues(alpha: 0.12),
+                shape: BoxShape.circle,
+              ),
+              child: Icon(icon, color: color, size: 22),
             ),
-            const SizedBox(height: 10),
-            ResourceCard(
-              icon: Icons.medical_services,
-              title: 'Meu Plano de Saúde',
-              description: 'Dados do seu convênio',
-              color: Colors.blue,
-              onTap: () => onNavigate('Plano de Saúde'),
+            const SizedBox(width: 12),
+            Expanded(
+              child: Text(
+                label,
+                style: TextStyle(
+                  fontSize: 14,
+                  fontWeight: FontWeight.w600,
+                  color: AppColors.textPrimary,
+                ),
+              ),
             ),
-            const SizedBox(height: 10),
-            ResourceCard(
-              icon: Icons.person,
-              title: 'Meu Perfil',
-              description: 'Visualize seus dados',
-              color: AppColors.secondary,
-              onTap: () => onNavigate('Perfil'),
-            ),
+            if (isLoggedIn)
+              Icon(
+                Icons.arrow_forward_ios,
+                color: Colors.grey.shade400,
+                size: 16,
+              )
+            else
+              Container(
+                padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+                decoration: BoxDecoration(
+                  color: Colors.grey.shade200,
+                  borderRadius: BorderRadius.circular(12),
+                ),
+                child: const Text(
+                  '🔒',
+                  style: TextStyle(
+                    fontSize: 14,
+                    color: Colors.grey,
+                  ),
+                ),
+              ),
           ],
         ),
       ),

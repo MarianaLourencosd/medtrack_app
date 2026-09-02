@@ -14,7 +14,7 @@ class HomeTestimonials extends StatefulWidget {
 }
 
 class _HomeTestimonialsState extends State<HomeTestimonials> {
-  final PageController _controller = PageController();
+  final PageController _controller = PageController(viewportFraction: 0.9);
   int _currentPage = 0;
 
   final List<Map<String, String>> _testimonials = [
@@ -23,6 +23,12 @@ class _HomeTestimonialsState extends State<HomeTestimonials> {
     {'name': 'Lucas Almeida', 'text': 'Tecnologia aplicada com responsabilidade.', 'color': '#2196F3'},
     {'name': 'Juliana Alves', 'text': 'Em emergências, fez toda diferença!', 'color': '#9C27B0'},
   ];
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -87,7 +93,7 @@ class _HomeTestimonialsState extends State<HomeTestimonials> {
             ),
             const SizedBox(height: 12),
             SizedBox(
-              height: 190,
+              height: 200,
               child: PageView.builder(
                 controller: _controller,
                 onPageChanged: (index) {
@@ -98,10 +104,13 @@ class _HomeTestimonialsState extends State<HomeTestimonials> {
                 itemCount: _testimonials.length,
                 itemBuilder: (context, index) {
                   final item = _testimonials[index];
-                  return _buildCard(
-                    name: item['name']!,
-                    text: item['text']!,
-                    color: _hexToColor(item['color']!),
+                  return Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 8),
+                    child: _buildCard(
+                      name: item['name']!,
+                      text: item['text']!,
+                      color: _hexToColor(item['color']!),
+                    ),
                   );
                 },
               ),
@@ -133,7 +142,6 @@ class _HomeTestimonialsState extends State<HomeTestimonials> {
 
   Widget _buildCard({required String name, required String text, required Color color}) {
     return Container(
-      margin: const EdgeInsets.symmetric(horizontal: 4),
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
         color: Colors.white,

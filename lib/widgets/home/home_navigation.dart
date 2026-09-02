@@ -2,10 +2,12 @@ import 'package:flutter/material.dart';
 import '../../constants/colors.dart';
 
 class HomeNavigation extends StatelessWidget {
+  final bool isLoggedIn;
   final Function(String) onNavigate;
 
   const HomeNavigation({
     super.key,
+    required this.isLoggedIn,
     required this.onNavigate,
   });
 
@@ -67,7 +69,7 @@ class HomeNavigation extends StatelessWidget {
                     borderRadius: BorderRadius.circular(12),
                   ),
                   child: Text(
-                    '3 páginas',
+                    isLoggedIn ? '4 páginas' : '3 páginas',
                     style: TextStyle(
                       fontSize: 11,
                       color: AppColors.primary,
@@ -80,26 +82,28 @@ class HomeNavigation extends StatelessWidget {
             const SizedBox(height: 12),
             Row(
               children: [
-                Expanded(
-                  child: _buildNavCard(
-                    icon: Icons.login,
-                    label: 'Login',
-                    description: 'Acesse sua conta',
-                    color: Colors.blue,
-                    route: 'Login',
+                if (!isLoggedIn)
+                  Expanded(
+                    child: _buildNavCard(
+                      icon: Icons.login,
+                      label: 'Login',
+                      description: 'Acesse sua conta',
+                      color: Colors.blue,
+                      route: 'Login',
+                    ),
                   ),
-                ),
-                const SizedBox(width: 10),
-                Expanded(
-                  child: _buildNavCard(
-                    icon: Icons.person_add,
-                    label: 'Cadastro',
-                    description: 'Crie sua conta',
-                    color: AppColors.secondary,
-                    route: 'Cadastro',
+                if (!isLoggedIn) const SizedBox(width: 10),
+                if (!isLoggedIn)
+                  Expanded(
+                    child: _buildNavCard(
+                      icon: Icons.person_add,
+                      label: 'Cadastro',
+                      description: 'Crie sua conta',
+                      color: AppColors.secondary,
+                      route: 'Cadastro',
+                    ),
                   ),
-                ),
-                const SizedBox(width: 10),
+                if (!isLoggedIn) const SizedBox(width: 10),
                 Expanded(
                   child: _buildNavCard(
                     icon: Icons.health_and_safety,
@@ -109,6 +113,17 @@ class HomeNavigation extends StatelessWidget {
                     route: 'Formulário',
                   ),
                 ),
+                if (isLoggedIn) const SizedBox(width: 10),
+                if (isLoggedIn)
+                  Expanded(
+                    child: _buildNavCard(
+                      icon: Icons.person,
+                      label: 'Perfil',
+                      description: 'Seus dados',
+                      color: Colors.purple,
+                      route: 'Perfil',
+                    ),
+                  ),
               ],
             ),
           ],
