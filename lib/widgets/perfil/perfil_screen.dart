@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import '../../constants/colors.dart';
+import '../../services/auth_service.dart';
 
 class PerfilScreen extends StatefulWidget {
   const PerfilScreen({super.key});
@@ -11,6 +11,7 @@ class PerfilScreen extends StatefulWidget {
 }
 
 class _PerfilScreenState extends State<PerfilScreen> {
+  final AuthService _auth = AuthService();
   Map<String, dynamic>? _userData;
   bool _isLoading = true;
 
@@ -28,21 +29,17 @@ class _PerfilScreenState extends State<PerfilScreen> {
     }
 
     try {
-      final doc = await FirebaseFirestore.instance
-          .collection('usuarios')
-          .doc(user.uid)
-          .get();
+      final usuario = await _auth.getUsuario(user.uid);
+      final formulario = await _auth.getFormulario(user.uid);
 
-      if (doc.exists) {
+      if (mounted) {
         setState(() {
-          _userData = doc.data();
+          _userData = {...?usuario, ...?formulario};
           _isLoading = false;
         });
-      } else {
-        setState(() => _isLoading = false);
       }
     } catch (e) {
-      setState(() => _isLoading = false);
+      if (mounted) setState(() => _isLoading = false);
     }
   }
 
