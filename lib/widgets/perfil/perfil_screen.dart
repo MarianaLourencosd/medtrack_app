@@ -122,15 +122,111 @@ class _PerfilScreenState extends State<PerfilScreen> {
             ),
           ),
           const SizedBox(height: 24),
-          _buildInfoItem('CPF', _userData?['cpf'] ?? 'Não informado'),
-          _buildInfoItem('Telefone', _userData?['telefone'] ?? 'Não informado'),
-          _buildInfoItem('Tipo Sanguíneo', _userData?['tipoSanguineo'] ?? 'Não informado'),
-          _buildInfoItem('Alergias', _userData?['alergias'] ?? 'Não informado'),
-          _buildInfoItem('Plano de Saúde', _userData?['planoSaude'] ?? 'Não informado'),
-          _buildInfoItem('Contato Emergência', _userData?['contatoEmergencia'] ?? 'Não informado'),
-          _buildInfoItem('Peso', _userData?['peso'] ?? 'Não informado'),
-          _buildInfoItem('Altura', _userData?['altura'] ?? 'Não informado'),
+          _buildSection(
+            icon: Icons.badge_outlined,
+            title: 'Dados Pessoais',
+            initiallyExpanded: true,
+            children: [
+              _buildInfoItem('CPF', _valor('cpf')),
+              _buildInfoItem('Data de Nascimento', _valor('dataNascimento')),
+              _buildInfoItem('Idade', _idadeTexto(_userData?['idade'])),
+              _buildInfoItem('Sexo', _valor('sexo')),
+              _buildInfoItem('Telefone', _valor('telefone')),
+              _buildInfoItem('Cartão SUS', _valor('cartaoSus')),
+            ],
+          ),
+          _buildSection(
+            icon: Icons.monitor_weight_outlined,
+            title: 'Dados Biométricos',
+            children: [
+              _buildInfoItem('Peso', _valor('peso')),
+              _buildInfoItem('Altura', _valor('altura')),
+              _buildInfoItem('IMC', _valor('imc')),
+              _buildInfoItem('Classificação', _valor('imcClassificacao')),
+              _buildInfoItem('Tipo Sanguíneo', _valor('tipoSanguineo')),
+            ],
+          ),
+          _buildSection(
+            icon: Icons.medical_information_outlined,
+            title: 'Informações Médicas',
+            children: [
+              _buildInfoItem('Plano de Saúde', _valor('planoSaude')),
+              _buildInfoItem('Alergias', _valor('alergias')),
+              _buildInfoItem('Condições Preexistentes', _valor('condicoesPreexistentes')),
+            ],
+          ),
+          _buildSection(
+            icon: Icons.emergency_outlined,
+            title: 'Contato de Emergência',
+            children: [
+              _buildInfoItem('Nome', _valor('contatoEmergencia')),
+              _buildInfoItem('Parentesco', _valor('contatoEmergenciaParentesco')),
+              _buildInfoItem('Telefone', _valor('contatoEmergenciaTelefone')),
+            ],
+          ),
+          _buildSection(
+            icon: Icons.medication_outlined,
+            title: 'Medicamentos e Observações',
+            children: [
+              _buildInfoItem('Medicamentos', _valor('medicamentos')),
+              _buildInfoItem('Observações', _valor('observacoes')),
+            ],
+          ),
         ],
+      ),
+    );
+  }
+
+  String _valor(String chave) {
+    final valor = _userData?[chave];
+    if (valor == null) return 'Não informado';
+    final texto = '$valor'.trim();
+    return texto.isEmpty ? 'Não informado' : texto;
+  }
+
+  String _idadeTexto(dynamic idade) {
+    if (idade == null) return 'Não informado';
+    return '$idade anos';
+  }
+
+  Widget _buildSection({
+    required IconData icon,
+    required String title,
+    required List<Widget> children,
+    bool initiallyExpanded = false,
+  }) {
+    return Container(
+      margin: const EdgeInsets.only(bottom: 12),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(12),
+        border: Border.all(color: Colors.grey.shade300),
+      ),
+      child: Theme(
+        data: Theme.of(context).copyWith(dividerColor: Colors.transparent),
+        child: ExpansionTile(
+          shape: const Border(),
+          collapsedShape: const Border(),
+          tilePadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
+          childrenPadding: const EdgeInsets.only(bottom: 8),
+          initiallyExpanded: initiallyExpanded,
+          leading: Icon(icon, color: AppColors.primary),
+          title: Text(
+            title,
+            style: const TextStyle(
+              fontSize: 16,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+          children: [
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 12),
+              child: Column(
+                children: children,
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
