@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:medtrack_app/widgets/formulario/formulario_screen.dart';
+import 'package:medtrack_app/telas/formulario/formulario_screen.dart';
 
 void main() {
   testWidgets('Renderiza tela de formulário com sucesso e exibe campos essenciais', (WidgetTester tester) async {
     await tester.pumpWidget(
       const MaterialApp(
-        home: FormularioScreen(),
+        home: TelaFormulario(),
       ),
     );
 
@@ -39,7 +39,7 @@ void main() {
   testWidgets('Alterna expansão das seções do formulário', (WidgetTester tester) async {
     await tester.pumpWidget(
       const MaterialApp(
-        home: FormularioScreen(),
+        home: TelaFormulario(),
       ),
     );
 
@@ -67,7 +67,7 @@ void main() {
   testWidgets('Alterna o modo escuro no botão da AppBar', (WidgetTester tester) async {
     await tester.pumpWidget(
       const MaterialApp(
-        home: FormularioScreen(),
+        home: TelaFormulario(),
       ),
     );
 
@@ -87,7 +87,7 @@ void main() {
   testWidgets('Valida campos obrigatórios ao clicar em Salvar Informações com formulário vazio', (WidgetTester tester) async {
     await tester.pumpWidget(
       const MaterialApp(
-        home: FormularioScreen(),
+        home: TelaFormulario(),
       ),
     );
 
