@@ -21,6 +21,7 @@ import '../login/login_screen.dart';
 import '../cadastro/signup_screen.dart';
 import '../perfil/perfil_screen.dart';
 import '../formulario/formulario_screen.dart';
+import '../emergencia/emergencia_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});

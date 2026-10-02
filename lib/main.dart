@@ -5,11 +5,11 @@ import 'package:firebase_core/firebase_core.dart';
 import 'constantes/tema_app.dart';
 import 'recursos/menu_acessibilidade.dart';
 import 'telas/home/home_screen.dart';
-import 'servicos/firebase_options.dart';
+import 'firebase_options.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp(options: FirebaseConfig.currentPlatform);
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   runApp(const MedTrackApp());
 }
 
@@ -31,8 +31,7 @@ class MedTrackApp extends StatelessWidget {
                   valueListenable: ConfigAcessibilidade.altoContraste,
                   builder: (context, altoContraste, _) {
                     return ValueListenableBuilder<bool>(
-                      valueListenable:
-                          ConfigAcessibilidade.reduzirAnimacoes,
+                      valueListenable: ConfigAcessibilidade.reduzirAnimacoes,
                       builder: (context, reduzirAnimacoes, _) {
                         return MaterialApp(
                           title: 'MedTrack',

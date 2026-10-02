@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "435824970238",
+    "project_id": "medtrackjgf",
+    "storage_bucket": "medtrackjgf.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:435824970238:android:7274bacb73fab8e062d8af",
+        "android_client_info": {
+          "package_name": "com.example.medtrack_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "435824970238-p6207ttc835rl26frphr9c3sa92j0jer.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyABrvibu0gXNNhdZqJ0V8lt_x9tx4CA5Yo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "435824970238-p6207ttc835rl26frphr9c3sa92j0jer.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

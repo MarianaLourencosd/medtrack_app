@@ -320,17 +320,6 @@ class TelaEmConstrucao extends StatelessWidget {
   }
 }
 
-class TelaEmergencia extends StatelessWidget {
-  const TelaEmergencia({super.key});
-  @override
-  Widget build(BuildContext context) => const TelaEmConstrucao(
-        titulo: 'Emergência',
-        subtitulo: 'Contatos e informações de emergência',
-        icone: Icons.emergency_rounded,
-        cor: CoresApp.error,
-      );
-}
-
 class TelaMedicamentos extends StatelessWidget {
   const TelaMedicamentos({super.key});
   @override
