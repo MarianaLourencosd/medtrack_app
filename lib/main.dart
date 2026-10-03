@@ -9,7 +9,9 @@ import 'firebase_options.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
   runApp(const MedTrackApp());
 }
 
@@ -37,9 +39,8 @@ class MedTrackApp extends StatelessWidget {
                           title: 'MedTrack',
                           theme: AppTheme.lightTheme,
                           darkTheme: AppTheme.darkTheme,
-                          themeMode: isDark
-                              ? ThemeMode.dark
-                              : ThemeMode.light,
+                          themeMode:
+                              isDark ? ThemeMode.dark : ThemeMode.light,
                           builder: (context, child) {
                             final mq = MediaQuery.of(context);
 
