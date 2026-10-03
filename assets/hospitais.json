@@ -1,0 +1,23 @@
+[
+  {
+    "nome": "Hospital Municipal de Matão",
+    "endereco": "R. Sinharinha Frota, 556 - Centro, Matão - SP",
+    "latitude": -21.605805,
+    "longitude": -48.367888,
+    "tipo": "Hospital"
+  },
+  {
+    "nome": "UBS Bairro Alto",
+    "endereco": "R. Pedro Bigal, 1530 - Bairro Alto, Matão - SP",
+    "latitude": -21.592726,
+    "longitude": -48.360679,
+    "tipo": "UBS"
+  },
+  {
+    "nome": "USF Jardim Popular",
+    "endereco": "R. Pedro Trolli, 3700 - Portal Terra da Saudade, Matão - SP",
+    "latitude": -21.589079,
+    "longitude": -48.342838,
+    "tipo": "USF"
+  }
+]
