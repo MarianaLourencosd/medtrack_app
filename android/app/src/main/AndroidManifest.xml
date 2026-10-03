@@ -1,4 +1,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
+
     <application
         android:label="medtrack_app"
         android:name="${applicationName}"
@@ -27,12 +31,14 @@
     </application>
 
     <queries>
-        <!-- Para o url_launcher conseguir abrir o discador (tel:) -->
         <intent>
             <action android:name="android.intent.action.VIEW" />
             <data android:scheme="tel" />
         </intent>
-        <!-- Para o Flutter conseguir processar texto (padrão do Flutter) -->
+        <intent>
+            <action android:name="android.intent.action.VIEW" />
+            <data android:scheme="https" />
+        </intent>
         <intent>
             <action android:name="android.intent.action.PROCESS_TEXT"/>
             <data android:mimeType="text/plain"/>
