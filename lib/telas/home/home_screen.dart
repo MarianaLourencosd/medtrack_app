@@ -1,6 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
+import '../qrcode/qrcode_screen.dart';
+import '../pdf/pdf_screen.dart';
+import '../notificacoes/notificacoes_screen.dart';
+import '../compartilhar/compartilhar_screen.dart';
+import '../lembretes/lembretes_screen.dart';
 import 'cabecalho_inicio.dart';
 import 'navegacao_home.dart';
 import 'acoes_rapidas_home.dart';
@@ -76,9 +81,17 @@ class _HomeScreenState extends State<HomeScreen> {
     }
 
     const rotasPublicas = [
-      'Home', 'Sobre', 'Login', 'Cadastro',
-      'Facebook', 'Instagram', 'YouTube', 'Twitter',
-      'Ajuda', 'Contato', 'FAQ',
+      'Home',
+      'Sobre',
+      'Login',
+      'Cadastro',
+      'Facebook',
+      'Instagram',
+      'YouTube',
+      'Twitter',
+      'Ajuda',
+      'Contato',
+      'FAQ',
     ];
 
     if (user == null && !rotasPublicas.contains(route)) {
@@ -117,13 +130,15 @@ class _HomeScreenState extends State<HomeScreen> {
       case 'Carteira':
         return const TelaCarteira();
       case 'QR Code':
-        return const TelaQrCode();
+        return const QrCodeScreen();
       case 'Compartilhar':
-        return const TelaCompartilhar();
+        return const CompartilharScreen();
       case 'Lembretes':
-        return const TelaLembretes();
+        return const LembretesScreen();
       case 'PDF':
-        return const TelaPdf();
+        return const PdfScreen();
+      case 'Notificações':
+        return const NotificacoesScreen();
       case 'IMC':
         return const TelaImc();
       case 'Hospitais':
@@ -162,11 +177,15 @@ class _HomeScreenState extends State<HomeScreen> {
           children: [
             const Icon(Icons.construction, size: 80, color: CoresApp.primary),
             const SizedBox(height: 20),
-            Text('Página "$route" em construção',
-                style: AppTextStyles.tituloTela),
+            Text(
+              'Página "$route" em construção',
+              style: AppTextStyles.tituloTela,
+            ),
             const SizedBox(height: 10),
-            Text('Volte para a Home e explore outros recursos!',
-                style: AppTextStyles.textoCorpoSecundario),
+            Text(
+              'Volte para a Home e explore outros recursos!',
+              style: AppTextStyles.textoCorpoSecundario,
+            ),
             const SizedBox(height: 30),
             ElevatedButton(
               onPressed: () => Navigator.pop(context),
@@ -216,9 +235,7 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
             const FAQHome(),
             const EstatisticasHome(),
-            RodapeHome(
-              onNavigate: (route) => _verificarAcesso(context, route),
-            ),
+            RodapeHome(onNavigate: (route) => _verificarAcesso(context, route)),
           ],
         ),
       ),
@@ -229,8 +246,12 @@ class _HomeScreenState extends State<HomeScreen> {
     return AppBar(
       title: Row(
         children: [
-          Image.asset('assets/images/logo-claro.png',
-              width: 32, height: 32, fit: BoxFit.contain),
+          Image.asset(
+            'assets/images/logo-claro.png',
+            width: 32,
+            height: 32,
+            fit: BoxFit.contain,
+          ),
           const SizedBox(width: 8),
           const Text(
             'MedTrack',
@@ -255,9 +276,7 @@ class _HomeScreenState extends State<HomeScreen> {
         const SizedBox(width: 6),
         _botaoTopo(
           isDark: isDark,
-          icon: isDark
-              ? Icons.light_mode_rounded
-              : Icons.dark_mode_rounded,
+          icon: isDark ? Icons.light_mode_rounded : Icons.dark_mode_rounded,
           tooltip: isDark ? 'Modo claro' : 'Modo escuro',
           onTap: TemaController.alternar,
         ),
