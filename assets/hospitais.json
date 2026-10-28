@@ -19,5 +19,75 @@
     "latitude": -21.589079,
     "longitude": -48.342838,
     "tipo": "USF"
+  },
+  {
+    "nome": "PSF Parque Aliança",
+    "endereco": "Parque Aliança, Matão - SP",
+    "latitude": -21.584453,
+    "longitude": -48.371650,
+    "tipo": "USF"
+  },
+  {
+    "nome": "UBS Las Lomas",
+    "endereco": "Las Lomas, Matão - SP",
+    "latitude": -21.614364,
+    "longitude": -48.356420,
+    "tipo": "UBS"
+  },
+  {
+    "nome": "UBS Jardim São José",
+    "endereco": "Jardim São José, Matão - SP",
+    "latitude": -21.589445,
+    "longitude": -48.377347,
+    "tipo": "UBS"
+  },
+  {
+    "nome": "UBS São Lourenço do Turvo",
+    "endereco": "São Lourenço do Turvo, Matão - SP",
+    "latitude": -21.549764,
+    "longitude": -48.533625,
+    "tipo": "UBS"
+  },
+  {
+    "nome": "PSF Bom Jesus",
+    "endereco": "Bom Jesus, Matão - SP",
+    "latitude": -21.601533,
+    "longitude": -48.391162,
+    "tipo": "USF"
+  },
+  {
+    "nome": "PSF Jardim Popular",
+    "endereco": "Jardim Popular, Matão - SP",
+    "latitude": -21.589089,
+    "longitude": -48.342796,
+    "tipo": "USF"
+  },
+  {
+    "nome": "UBS Vila Pereira",
+    "endereco": "Vila Pereira, Matão - SP",
+    "latitude": -21.601477,
+    "longitude": -48.380709,
+    "tipo": "UBS"
+  },
+  {
+    "nome": "PSF Assentamento Horto Silvânia e Paraíso",
+    "endereco": "Paraíso, Matão - SP",
+    "latitude": -21.640024,
+    "longitude": -48.294306,
+    "tipo": "USF"
+  },
+  {
+    "nome": "UBS Jardim Paraíso",
+    "endereco": "Jardim Paraíso, Matão - SP",
+    "latitude": -21.630811,
+    "longitude": -48.340418,
+    "tipo": "UBS"
+  },
+  {
+    "nome": "UBS IV Centenário",
+    "endereco": "IV Centenário, Matão - SP",
+    "latitude": -21.607242,
+    "longitude": -48.354217,
+    "tipo": "UBS"
   }
 ]
