@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import '../../constantes/cores.dart';
 import '../../servicos/servico_autenticacao.dart';
+import '../../servicos/servico_medicamentos.dart';
 import '../../constantes/estilos_texto.dart';
+import 'widgets/medicamentos_chip_field.dart';
 
 class TelaFormulario extends StatefulWidget {
   const TelaFormulario({super.key});
@@ -39,6 +41,9 @@ class _TelaFormularioState extends State<TelaFormulario> {
   // Controllers - Medicamentos e Observações
   final TextEditingController _medicamentosController = TextEditingController();
   final TextEditingController _observacoesController = TextEditingController();
+
+  // Serviço de medicamentos (autocomplete ANVISA)
+  final ServicoMedicamentos _servicoMedicamentos = ServicoMedicamentos();
 
   // Selected values
   String? _sexoSelecionado;
@@ -82,7 +87,13 @@ class _TelaFormularioState extends State<TelaFormulario> {
     super.initState();
     _alturaController.addListener(_calcularImc);
     _pesoController.addListener(_calcularImc);
+    _inicializarServicos();
     _carregarDadosIniciais();
+  }
+
+  Future<void> _inicializarServicos() async {
+    await _servicoMedicamentos.inicializar();
+    if (mounted) setState(() {}); // Força rebuild se houve erro
   }
 
   @override
@@ -100,6 +111,7 @@ class _TelaFormularioState extends State<TelaFormulario> {
     _emergenciaTelefoneController.dispose();
     _medicamentosController.dispose();
     _observacoesController.dispose();
+    _servicoMedicamentos.dispose();
     super.dispose();
   }
 
@@ -1013,19 +1025,15 @@ class _TelaFormularioState extends State<TelaFormulario> {
   }
 
   Widget _buildMedicamentosContent(Color cardBg, Color textColor) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        _buildFieldLabel('Medicamentos em Uso Contínuo', obrigatorio: false, textColor: textColor),
-        _buildTextInput(
-          controller: _medicamentosController,
-          hintText: 'Liste seus medicamentos regulares (dosagem, horário)...',
-          icon: Icons.healing_outlined,
-          maxLines: 3,
-          cardBg: cardBg,
-          textColor: textColor,
-        ),
-      ],
+    return MedicamentosChipField(
+      controller: _medicamentosController,
+      servico: _servicoMedicamentos,
+      label: 'Medicamentos em Uso Contínuo',
+      hintText: 'Buscar medicamento (nome ou princípio ativo)...',
+      icon: Icons.medication_outlined,
+      maxChips: 15,
+      cardBg: cardBg,
+      textColor: textColor,
     );
   }
 
