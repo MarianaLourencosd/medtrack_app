@@ -850,6 +850,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "4.6.0"
+  validar_brasileiro:
+    dependency: "direct main"
+    description:
+      name: validar_brasileiro
+      sha256: ef78f9cc6062aeb1f977701fc3721074325550b7827aafc5e6d9dfc9552ac6c6
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.2.0"
   vector_graphics:
     dependency: transitive
     description:

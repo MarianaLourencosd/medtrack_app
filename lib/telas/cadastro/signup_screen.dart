@@ -1,4 +1,6 @@
+
 import 'package:flutter/material.dart';
+import 'package:validar_brasileiro/validar_brasileiro.dart';
 import '../../servicos/servico_autenticacao.dart';
 import '../login/login_screen.dart';
 import '../home/home_screen.dart';
@@ -31,6 +33,11 @@ class _TelaCadastroState extends State<TelaCadastro> {
         _senha.text.isEmpty ||
         _confirmaSenha.text.isEmpty) {
       _showSnackbar('Preencha todos os campos!');
+      return;
+    }
+
+    if (!Cpf.isValid(_cpf.text)) {
+      _showSnackbar('CPF inválido! Verifique o número informado.');
       return;
     }
 
@@ -158,13 +165,9 @@ class _TelaCadastroState extends State<TelaCadastro> {
         ),
         actions: [
           IconButton(
-            tooltip: _isDarkMode
-                ? 'Modo claro'
-                : 'Modo escuro',
+            tooltip: _isDarkMode ? 'Modo claro' : 'Modo escuro',
             icon: Icon(
-              _isDarkMode
-                  ? Icons.light_mode
-                  : Icons.dark_mode,
+              _isDarkMode ? Icons.light_mode : Icons.dark_mode,
               color: Colors.white,
             ),
             onPressed: () {
@@ -369,8 +372,7 @@ class _TelaCadastroState extends State<TelaCadastro> {
                               ),
                             )
                           : const Row(
-                              mainAxisAlignment:
-                                  MainAxisAlignment.center,
+                              mainAxisAlignment: MainAxisAlignment.center,
                               children: [
                                 Icon(
                                   Icons.person_add_alt_1,
@@ -382,8 +384,7 @@ class _TelaCadastroState extends State<TelaCadastro> {
                                   style: TextStyle(
                                     fontSize: 16,
                                     fontWeight: FontWeight.bold,
-                                    fontFamily:
-                                        AppTextStyles.fontKarla,
+                                    fontFamily: AppTextStyles.fontKarla,
                                   ),
                                 ),
                               ],
@@ -412,8 +413,7 @@ class _TelaCadastroState extends State<TelaCadastro> {
                               color: _isDarkMode
                                   ? Colors.white54
                                   : Colors.grey.shade500,
-                              fontFamily:
-                                  AppTextStyles.fontMontserrat,
+                              fontFamily: AppTextStyles.fontMontserrat,
                             ),
                           ),
                         ),
@@ -449,8 +449,7 @@ class _TelaCadastroState extends State<TelaCadastro> {
                         style: TextStyle(
                           fontSize: 14,
                           fontWeight: FontWeight.w600,
-                          fontFamily:
-                              AppTextStyles.fontMontserrat,
+                          fontFamily: AppTextStyles.fontMontserrat,
                         ),
                       ),
                     ),
