@@ -2,8 +2,10 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class ServicoAutenticacao {
-  final FirebaseAuth _auth = FirebaseAuth.instance;
-  final FirebaseFirestore _db = FirebaseFirestore.instance;
+  // Acesso tardio: criar o serviço não exige que o Firebase já esteja
+  // inicializado, o que também permite testar telas que apenas o instanciam.
+  FirebaseAuth get _auth => FirebaseAuth.instance;
+  FirebaseFirestore get _db => FirebaseFirestore.instance;
 
   Future<Map<String, dynamic>?> getUsuario(String uid) async {
     final doc = await _db.collection('usuarios').doc(uid).get();
@@ -21,10 +23,9 @@ class ServicoAutenticacao {
       'usuarioId': uid,
       'atualizadoEm': FieldValue.serverTimestamp(),
     });
-    await _db
-        .collection('usuarios')
-        .doc(uid)
-        .set({'formularioPreenchido': true}, SetOptions(merge: true));
+    await _db.collection('usuarios').doc(uid).set({
+      'formularioPreenchido': true,
+    }, SetOptions(merge: true));
   }
 
   Future<void> login(String email, String senha) async {
@@ -34,7 +35,12 @@ class ServicoAutenticacao {
     );
   }
 
-  Future<void> signup(String nome, String email, String senha, String cpf) async {
+  Future<void> signup(
+    String nome,
+    String email,
+    String senha,
+    String cpf,
+  ) async {
     final user = await _auth.createUserWithEmailAndPassword(
       email: email.trim(),
       password: senha,

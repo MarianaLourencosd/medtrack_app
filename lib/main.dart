@@ -3,15 +3,26 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:firebase_core/firebase_core.dart';
 
 import 'constantes/tema_app.dart';
+import 'recursos/deep_link_listener.dart';
 import 'recursos/menu_acessibilidade.dart';
+import 'servicos/servico_notificacoes.dart';
 import 'telas/home/home_screen.dart';
 import 'firebase_options.dart';
+
+/// Chave usada pelo listener de deep link para abrir telas sem depender de
+/// um `BuildContext` disponível no momento em que o link chega.
+final GlobalKey<NavigatorState> _navegadorKey = GlobalKey<NavigatorState>();
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
+
+  // Prepara as notificações locais sem exibir o pedido de permissão agora.
+  // A permissão é solicitada quando o usuário abre a tela de lembretes.
+  await ServicoNotificacoes.instancia.inicializar();
+
   runApp(const MedTrackApp());
 }
 
@@ -37,6 +48,7 @@ class MedTrackApp extends StatelessWidget {
                       builder: (context, reduzirAnimacoes, _) {
                         return MaterialApp(
                           title: 'MedTrack',
+                          navigatorKey: _navegadorKey,
                           theme: AppTheme.lightTheme,
                           darkTheme: AppTheme.darkTheme,
                           themeMode:
@@ -77,7 +89,10 @@ class MedTrackApp extends StatelessWidget {
 
                             return resultado;
                           },
-                          home: const HomeScreen(),
+                          home: DeepLinkListener(
+                            navigatorKey: _navegadorKey,
+                            child: const HomeScreen(),
+                          ),
                           debugShowCheckedModeBanner: false,
                           localizationsDelegates: const [
                             GlobalMaterialLocalizations.delegate,
