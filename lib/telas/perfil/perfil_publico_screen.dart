@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
 import '../../constantes/cores.dart';
-import '../../constantes/estilos_texto.dart';
 import '../../modelos/perfil_publico.dart';
 import '../../recursos/perfil_publico_conteudo.dart';
 import '../../servicos/servico_perfil.dart';
@@ -28,28 +27,46 @@ class _TelaPerfilPublicoState extends State<TelaPerfilPublico> {
 
   Future<void> _recarregar() async {
     final futuro = _servico.carregarPerfilPublico(widget.uid);
+
     setState(() {
       _futuro = futuro;
     });
 
-    // Aguarda o término para que o indicador do pull-to-refresh permaneça
-    // visível durante a nova consulta.
     try {
       await futuro;
     } catch (_) {
-      // O FutureBuilder já apresenta o estado de erro.
+      // O FutureBuilder apresenta o estado de erro.
     }
   }
 
   @override
   Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+
     return Scaffold(
+      backgroundColor: isDark
+          ? Theme.of(context).scaffoldBackgroundColor
+          : const Color(0xFFF6F5FA),
       appBar: AppBar(
         backgroundColor: CoresApp.primary,
-        foregroundColor: CoresApp.white,
-        title: const Text('Perfil compartilhado'),
+        foregroundColor: Colors.white,
+        elevation: 0,
+        scrolledUnderElevation: 0,
+        surfaceTintColor: Colors.transparent,
+        centerTitle: true,
+        title: const Text(
+          'Perfil compartilhado',
+          style: TextStyle(
+            fontSize: 18,
+            fontWeight: FontWeight.w700,
+            letterSpacing: 0.1,
+          ),
+        ),
         leading: IconButton(
-          icon: const Icon(Icons.arrow_back_ios_new_rounded, size: 19),
+          icon: const Icon(
+            Icons.arrow_back_ios_new_rounded,
+            size: 19,
+          ),
           onPressed: () => Navigator.pop(context),
         ),
       ),
@@ -57,9 +74,7 @@ class _TelaPerfilPublicoState extends State<TelaPerfilPublico> {
         future: _futuro,
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
-            return const Center(
-              child: CircularProgressIndicator(color: CoresApp.primary),
-            );
+            return const _Carregando();
           }
 
           if (snapshot.hasError) {
@@ -67,20 +82,22 @@ class _TelaPerfilPublicoState extends State<TelaPerfilPublico> {
               icone: Icons.wifi_off_rounded,
               titulo: 'Não foi possível carregar',
               mensagem:
-                  'Verifique sua conexão. Se o problema continuar, o acesso a '
-                  'perfis de outros usuários pode estar bloqueado pelas regras '
-                  'do Firestore.',
+                  'Verifique sua conexão. Se o problema continuar, '
+                  'o acesso a perfis de outros usuários pode estar '
+                  'bloqueado pelas regras do Firestore.',
               onTentarNovamente: _recarregar,
             );
           }
 
           final perfil = snapshot.data;
+
           if (perfil == null) {
             return _Estado(
               icone: Icons.person_off_rounded,
               titulo: 'Perfil não encontrado',
               mensagem:
-                  'O link pode estar desatualizado ou o usuário foi removido.',
+                  'O link pode estar desatualizado ou o usuário '
+                  'foi removido.',
               onTentarNovamente: _recarregar,
             );
           }
@@ -90,11 +107,57 @@ class _TelaPerfilPublicoState extends State<TelaPerfilPublico> {
             onRefresh: _recarregar,
             child: SingleChildScrollView(
               physics: const AlwaysScrollableScrollPhysics(),
-              padding: const EdgeInsets.all(20),
-              child: PerfilPublicoConteudo(perfil: perfil),
+              padding: const EdgeInsets.fromLTRB(18, 20, 18, 32),
+              child: Center(
+                child: ConstrainedBox(
+                  constraints: const BoxConstraints(maxWidth: 720),
+                  child: PerfilPublicoConteudo(perfil: perfil),
+                ),
+              ),
             ),
           );
         },
+      ),
+    );
+  }
+}
+
+class _Carregando extends StatelessWidget {
+  const _Carregando();
+
+  @override
+  Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+
+    return Center(
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Container(
+            width: 68,
+            height: 68,
+            padding: const EdgeInsets.all(20),
+            decoration: BoxDecoration(
+              color: CoresApp.primary.withOpacity(isDark ? 0.18 : 0.10),
+              shape: BoxShape.circle,
+            ),
+            child: CircularProgressIndicator(
+              strokeWidth: 2.6,
+              color: CoresApp.primary,
+            ),
+          ),
+          const SizedBox(height: 18),
+          Text(
+            'Carregando perfil...',
+            style: TextStyle(
+              fontSize: 14,
+              fontWeight: FontWeight.w500,
+              color: isDark
+                  ? CoresApp.darkTextSecondary
+                  : const Color(0xFF7A7690),
+            ),
+          ),
+        ],
       ),
     );
   }
@@ -116,7 +179,11 @@ class _Estado extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
-    final textColor = isDark ? CoresApp.darkTextPrimary : CoresApp.textPrimary;
+
+    final corTexto =
+        isDark ? CoresApp.darkTextPrimary : const Color(0xFF2A2738);
+    final corSecundaria =
+        isDark ? CoresApp.darkTextSecondary : const Color(0xFF7A7690);
 
     return Center(
       child: SingleChildScrollView(
@@ -124,41 +191,82 @@ class _Estado extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
+            // Ícone com halo duplo
             Container(
-              width: 78,
-              height: 78,
+              padding: const EdgeInsets.all(12),
               decoration: BoxDecoration(
-                color: CoresApp.softRed,
-                borderRadius: BorderRadius.circular(24),
+                color: CoresApp.primary.withOpacity(isDark ? 0.08 : 0.05),
+                borderRadius: BorderRadius.circular(34),
               ),
-              child: Icon(icone, color: CoresApp.error, size: 38),
+              child: Container(
+                width: 84,
+                height: 84,
+                decoration: BoxDecoration(
+                  gradient: LinearGradient(
+                    begin: Alignment.topLeft,
+                    end: Alignment.bottomRight,
+                    colors: [
+                      CoresApp.primary.withOpacity(isDark ? 0.26 : 0.16),
+                      CoresApp.primary.withOpacity(isDark ? 0.12 : 0.07),
+                    ],
+                  ),
+                  borderRadius: BorderRadius.circular(26),
+                ),
+                child: Icon(
+                  icone,
+                  color: CoresApp.primary,
+                  size: 38,
+                ),
+              ),
             ),
-            const SizedBox(height: 18),
+            const SizedBox(height: 24),
             Text(
               titulo,
               textAlign: TextAlign.center,
-              style: AppTextStyles.tituloCardClaro.copyWith(color: textColor),
+              style: TextStyle(
+                fontSize: 20,
+                fontWeight: FontWeight.w800,
+                color: corTexto,
+                letterSpacing: -0.2,
+              ),
             ),
-            const SizedBox(height: 8),
-            Text(
-              mensagem,
-              textAlign: TextAlign.center,
-              style: AppTextStyles.textoCorpoSecundario,
+            const SizedBox(height: 10),
+            ConstrainedBox(
+              constraints: const BoxConstraints(maxWidth: 320),
+              child: Text(
+                mensagem,
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  fontSize: 14,
+                  height: 1.55,
+                  color: corSecundaria,
+                ),
+              ),
             ),
-            const SizedBox(height: 20),
+            const SizedBox(height: 28),
             ElevatedButton.icon(
               onPressed: onTentarNovamente,
-              icon: const Icon(Icons.refresh_rounded, size: 19),
-              label: const Text('Tentar novamente'),
+              icon: const Icon(
+                Icons.refresh_rounded,
+                size: 19,
+              ),
+              label: const Text(
+                'Tentar novamente',
+                style: TextStyle(
+                  fontSize: 14.5,
+                  fontWeight: FontWeight.w700,
+                ),
+              ),
               style: ElevatedButton.styleFrom(
                 backgroundColor: CoresApp.primary,
-                foregroundColor: CoresApp.white,
+                foregroundColor: Colors.white,
+                elevation: 0,
                 padding: const EdgeInsets.symmetric(
-                  horizontal: 20,
-                  vertical: 13,
+                  horizontal: 26,
+                  vertical: 15,
                 ),
                 shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(13),
+                  borderRadius: BorderRadius.circular(14),
                 ),
               ),
             ),
