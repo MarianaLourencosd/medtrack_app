@@ -28,6 +28,25 @@
 	<true/>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string>Precisamos da sua localização para mostrar as unidades de saúde mais próximas.</string>
+	<key>NSCameraUsageDescription</key>
+	<string>Precisamos da câmera para ler QR Codes de perfis do MedTrack.</string>
+	<key>FlutterDeepLinkingEnabled</key>
+	<false/>
+	<key>UIFileSharingEnabled</key>
+	<true/>
+	<key>LSSupportsOpeningDocumentsInPlace</key>
+	<true/>
+	<key>CFBundleURLTypes</key>
+	<array>
+		<dict>
+			<key>CFBundleURLName</key>
+			<string>com.example.medtrack_app</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>medtrack</string>
+			</array>
+		</dict>
+	</array>
 	<key>LSApplicationQueriesSchemes</key>
 	<array>
 		<string>tel</string>

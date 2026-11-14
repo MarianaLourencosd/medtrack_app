@@ -3,105 +3,93 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:medtrack_app/telas/formulario/formulario_screen.dart';
 
 void main() {
-  testWidgets('Renderiza tela de formulário com sucesso e exibe campos essenciais', (WidgetTester tester) async {
-    await tester.pumpWidget(
-      const MaterialApp(
-        home: TelaFormulario(),
-      ),
-    );
-
+  Future<void> abrirFormulario(WidgetTester tester) async {
+    await tester.pumpWidget(const MaterialApp(home: TelaFormulario()));
     await tester.pumpAndSettle();
+  }
 
-    // Verifica elementos do cabeçalho
-    expect(find.text('MedTrack'), findsOneWidget);
-    expect(find.text('PREENCHA O FORMULÁRIO'), findsOneWidget);
-    expect(find.text('Seu espaço para cuidar da saúde.'), findsOneWidget);
+  testWidgets(
+    'Renderiza tela de formulário com sucesso e exibe campos essenciais',
+    (WidgetTester tester) async {
+      await abrirFormulario(tester);
 
-    // Verifica se as seções principais estão presentes
-    expect(find.text('Dados Pessoais'), findsOneWidget);
-    expect(find.text('Informações Médicas'), findsOneWidget);
-    expect(find.text('Contatos de Emergência'), findsOneWidget);
-    expect(find.text('Medicamentos'), findsOneWidget);
-    expect(find.text('Observações Gerais'), findsOneWidget);
+      // Cabeçalho
+      expect(find.text('MedTrack'), findsOneWidget);
+      expect(find.text('PREENCHA O FORMULÁRIO'), findsOneWidget);
+      expect(find.text('Seu espaço para cuidar da saúde.'), findsOneWidget);
 
-    // Verifica campos de Dados Pessoais
-    expect(find.text('Digite seu nome completo'), findsOneWidget);
-    expect(find.text('Digite seu CPF'), findsOneWidget);
-    expect(find.text('dd/mm/aaaa'), findsOneWidget);
-    expect(find.text('Ex: 1.75'), findsOneWidget);
-    expect(find.text('Ex: 70'), findsOneWidget);
-    expect(find.text('Digite o número do cartão SUS'), findsOneWidget);
+      // Seções principais
+      expect(find.text('Dados Biométricos e Físicos'), findsOneWidget);
+      expect(find.text('Informações Médicas'), findsOneWidget);
+      expect(find.text('Contatos de Emergência'), findsOneWidget);
+      expect(find.text('Medicamentos'), findsOneWidget);
+      expect(find.text('Observações Gerais'), findsOneWidget);
 
-    // Verifica botão de submissão
-    expect(find.text('Salvar Informações'), findsOneWidget);
-  });
+      // Campos da seção aberta por padrão (rótulos com * usam RichText).
+      expect(find.text('dd/mm/aaaa'), findsOneWidget);
+      expect(find.text('Ex: 1.75'), findsOneWidget);
+      expect(find.text('Ex: 70'), findsOneWidget);
 
-  testWidgets('Alterna expansão das seções do formulário', (WidgetTester tester) async {
-    await tester.pumpWidget(
-      const MaterialApp(
-        home: TelaFormulario(),
-      ),
-    );
+      await tester.ensureVisible(find.text('Número do cartão'));
+      expect(find.text('Número do cartão'), findsOneWidget);
 
-    await tester.pumpAndSettle();
+      // Botão de submissão
+      await tester.ensureVisible(find.text('Salvar Informações'));
+      expect(find.text('Salvar Informações'), findsOneWidget);
+    },
+  );
 
-    // Rola e clica em 'Contatos de Emergência' para expandir
+  testWidgets('Alterna expansão das seções do formulário', (
+    WidgetTester tester,
+  ) async {
+    await abrirFormulario(tester);
+
+    // Contatos de Emergência começa recolhido.
     final contatosTile = find.text('Contatos de Emergência');
     await tester.ensureVisible(contatosTile);
     await tester.tap(contatosTile);
-    await tester.pumpAndSettle();
+    await tester.pump(const Duration(milliseconds: 400));
 
-    // Campo interno agora deve estar visível
     expect(find.text('Ex: Maria da Silva'), findsOneWidget);
 
-    // Rola e clica em 'Medicamentos' para expandir
+    // Medicamentos também começa recolhido.
     final medicamentosTile = find.text('Medicamentos');
     await tester.ensureVisible(medicamentosTile);
     await tester.tap(medicamentosTile);
-    await tester.pumpAndSettle();
+    await tester.pump(const Duration(milliseconds: 400));
 
-    // Campo interno de medicamentos visível
-    expect(find.text('Liste seus medicamentos regulares (dosagem, horário)...'), findsOneWidget);
+    expect(
+      find.text('Buscar medicamento (nome ou princípio ativo)...'),
+      findsOneWidget,
+    );
   });
 
-  testWidgets('Alterna o modo escuro no botão da AppBar', (WidgetTester tester) async {
-    await tester.pumpWidget(
-      const MaterialApp(
-        home: TelaFormulario(),
-      ),
-    );
+  testWidgets('Alterna o modo escuro no botão da AppBar', (
+    WidgetTester tester,
+  ) async {
+    await abrirFormulario(tester);
 
-    await tester.pumpAndSettle();
-
-    // Verifica ícone de modo escuro inicial
     expect(find.byIcon(Icons.nightlight_round), findsOneWidget);
 
-    // Clica no botão de tema
     await tester.tap(find.byIcon(Icons.nightlight_round));
     await tester.pumpAndSettle();
 
-    // Agora deve exibir ícone de sol
     expect(find.byIcon(Icons.wb_sunny_outlined), findsOneWidget);
   });
 
-  testWidgets('Valida campos obrigatórios ao clicar em Salvar Informações com formulário vazio', (WidgetTester tester) async {
-    await tester.pumpWidget(
-      const MaterialApp(
-        home: TelaFormulario(),
-      ),
-    );
+  testWidgets('Valida campos obrigatórios ao salvar formulário vazio', (
+    WidgetTester tester,
+  ) async {
+    await abrirFormulario(tester);
 
-    await tester.pumpAndSettle();
-
-    // Rola até o botão de salvar se necessário e clica
     final salvarBtn = find.text('Salvar Informações');
     await tester.ensureVisible(salvarBtn);
     await tester.tap(salvarBtn);
     await tester.pumpAndSettle();
 
-    // Deve exibir mensagens de validação
-    expect(find.text('Informe seu nome completo'), findsOneWidget);
-    expect(find.text('Informe o CPF'), findsOneWidget);
     expect(find.text('Informe a data'), findsOneWidget);
+    expect(find.text('Informe a altura'), findsOneWidget);
+    expect(find.text('Informe o peso'), findsOneWidget);
+    expect(find.text('Informe o cartão SUS'), findsOneWidget);
   });
 }

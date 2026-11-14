@@ -1,0 +1,36 @@
+rules_version = '2';
+
+// Regras de referência do MedTrack.
+//
+// IMPORTANTE: este arquivo NÃO é publicado automaticamente. Para aplicar:
+//   firebase deploy --only firestore:rules
+//
+// A leitura entre usuários autenticados é necessária para a prévia de perfil
+// por QR Code e deep link. O aplicativo mostra apenas os campos gerais de
+// saúde, mas o Firestore entrega o documento inteiro ao cliente; por isso a
+// leitura é restrita a usuários autenticados.
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    function autenticado() {
+      return request.auth != null;
+    }
+
+    function dono(uid) {
+      return autenticado() && request.auth.uid == uid;
+    }
+
+    // Perfil básico criado no cadastro.
+    match /usuarios/{uid} {
+      allow read: if autenticado();
+      allow create: if dono(uid);
+      allow update, delete: if dono(uid);
+    }
+
+    // Formulário de saúde usado pela prévia do perfil e pelo PDF.
+    match /formularios/{uid} {
+      allow read: if autenticado();
+      allow create, update, delete: if dono(uid);
+    }
+  }
+}
