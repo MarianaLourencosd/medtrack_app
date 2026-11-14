@@ -105,6 +105,16 @@ class RecursosHome extends StatelessWidget {
                 const SizedBox(height: 9),
                 _buildResourceItem(
                   context: context,
+                  icon: Icons.emoji_events_rounded,
+                  label: 'Desafio de 7 dias',
+                  description: 'Crie hábitos e acompanhe seu progresso',
+                  color: CoresApp.secondary,
+                  background: CoresApp.paleGreen,
+                  route: 'Desafio',
+                ),
+                const SizedBox(height: 9),
+                _buildResourceItem(
+                  context: context,
                   icon: Icons.emergency_rounded,
                   label: 'Emergência',
                   description: 'Tenha acesso rápido à emergência',

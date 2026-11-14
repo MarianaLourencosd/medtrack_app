@@ -27,6 +27,7 @@ import '../cadastro/signup_screen.dart';
 import '../perfil/perfil_screen.dart';
 import '../formulario/formulario_screen.dart';
 import '../emergencia/emergencia_screen.dart';
+import '../desafio/desafio_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -135,6 +136,8 @@ class _HomeScreenState extends State<HomeScreen> {
         return const CompartilharScreen();
       case 'Lembretes':
         return const LembretesScreen();
+      case 'Desafio':
+        return const DesafioScreen();
       case 'PDF':
         return const PdfScreen();
       case 'Notificações':
