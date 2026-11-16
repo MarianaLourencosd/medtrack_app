@@ -60,27 +60,62 @@ class _DepoimentosHomeState extends State<DepoimentosHome> {
   @override
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
-    final tituloColor =
-        isDark ? CoresApp.darkTextPrimary : CoresApp.textPrimary;
-    final subtituloColor =
-        isDark ? CoresApp.darkTextSecondary : CoresApp.textSecondary;
+    final tituloColor = isDark ? CoresApp.darkTextPrimary : CoresApp.textPrimary;
+    final subtituloColor = isDark ? CoresApp.darkTextSecondary : CoresApp.textSecondary;
 
     return Padding(
       padding: const EdgeInsets.fromLTRB(18, 4, 18, 30),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(
-            'Depoimentos',
-            style: AppTextStyles.tituloSecao.copyWith(color: tituloColor),
+          Row(
+            children: [
+              Container(
+                width: 4,
+                height: 22,
+                decoration: BoxDecoration(
+                  color: CoresApp.primaryDark,
+                  borderRadius: BorderRadius.circular(2),
+                ),
+              ),
+              const SizedBox(width: 10),
+              Expanded(
+                child: Text(
+                  'Depoimentos',
+                  style: AppTextStyles.tituloSecao.copyWith(color: tituloColor),
+                ),
+              ),
+            ],
           ),
-          const SizedBox(height: 4),
-          Text(
-            'O que nossos usuários dizem',
-            style:
-                AppTextStyles.subtituloSecao.copyWith(color: subtituloColor),
+          const SizedBox(height: 6),
+          Padding(
+            padding: const EdgeInsets.only(left: 14),
+            child: Row(
+              children: [
+                Container(
+                  width: 6,
+                  height: 6,
+                  decoration: BoxDecoration(
+                    color: CoresApp.primaryDark,
+                    shape: BoxShape.circle,
+                  ),
+                ),
+                const SizedBox(width: 6),
+                Expanded(
+                  child: Text(
+                    'O que nossos usuários dizem',
+                    style: AppTextStyles.micro.copyWith(
+                      color: subtituloColor,
+                      fontWeight: FontWeight.w500,
+                      fontSize: 11.5,
+                      letterSpacing: 0.1,
+                    ),
+                  ),
+                ),
+              ],
+            ),
           ),
-          const SizedBox(height: 13),
+          const SizedBox(height: 16),
           _buildCard(context),
         ],
       ),
@@ -95,15 +130,15 @@ class _DepoimentosHomeState extends State<DepoimentosHome> {
 
     return Container(
       width: double.infinity,
-      padding: const EdgeInsets.fromLTRB(16, 16, 16, 14),
+      padding: const EdgeInsets.fromLTRB(14, 14, 14, 12),
       decoration: BoxDecoration(
         color: cardColor,
-        borderRadius: BorderRadius.circular(25),
+        borderRadius: BorderRadius.circular(24),
         border: Border.all(color: borderColor),
         boxShadow: [
           BoxShadow(
-            color: CoresApp.black.withValues(alpha: isDark ? 0.25 : 0.045),
-            blurRadius: 15,
+            color: CoresApp.black.withValues(alpha: isDark ? 0.20 : 0.04),
+            blurRadius: 16,
             offset: const Offset(0, 6),
           ),
         ],
@@ -111,11 +146,10 @@ class _DepoimentosHomeState extends State<DepoimentosHome> {
       child: Column(
         children: [
           SizedBox(
-            height: 164,
+            height: 170,
             child: PageView.builder(
               controller: _controller,
-              onPageChanged: (index) =>
-                  setState(() => _currentPage = index),
+              onPageChanged: (index) => setState(() => _currentPage = index),
               itemCount: itens.length,
               itemBuilder: (context, index) {
                 final item = itens[index];
@@ -145,37 +179,38 @@ class _DepoimentosHomeState extends State<DepoimentosHome> {
     required Color color,
   }) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
-    final avatarColor =
-        color == CoresApp.softPurple ? CoresApp.primaryLight : color;
+    final avatarColor = color == CoresApp.softPurple ? CoresApp.primaryLight : color;
     final cardBg = isDark ? CoresApp.darkSurfaceAlt : CoresApp.background;
-    final nameColor =
-        isDark ? CoresApp.darkTextPrimary : CoresApp.textPrimary;
-    final textColor =
-        isDark ? CoresApp.darkTextSecondary : CoresApp.textSecondary;
-    final inicial =
-        name.isNotEmpty ? name.substring(0, 1).toUpperCase() : '?';
+    final nameColor = isDark ? CoresApp.darkTextPrimary : CoresApp.textPrimary;
+    final textColor = isDark ? CoresApp.darkTextSecondary : CoresApp.textSecondary;
+    final inicial = name.isNotEmpty ? name.substring(0, 1).toUpperCase() : '?';
 
     return Container(
-      padding: const EdgeInsets.all(15),
+      padding: const EdgeInsets.all(14),
       decoration: BoxDecoration(
         color: cardBg,
-        borderRadius: BorderRadius.circular(21),
+        borderRadius: BorderRadius.circular(20),
         border: Border.all(
-          color: isDark
-              ? CoresApp.darkBorder
-              : avatarColor.withValues(alpha: 0.12),
+          color: isDark ? CoresApp.darkBorder : CoresApp.greyLight,
         ),
+        boxShadow: [
+          BoxShadow(
+            color: CoresApp.black.withValues(alpha: isDark ? 0.15 : 0.03),
+            blurRadius: 10,
+            offset: const Offset(0, 3),
+          ),
+        ],
       ),
       child: Stack(
         children: [
           Positioned(
-            top: -35,
-            right: -28,
+            top: -30,
+            right: -24,
             child: Container(
-              width: 90,
-              height: 90,
+              width: 80,
+              height: 80,
               decoration: BoxDecoration(
-                color: avatarColor.withValues(alpha: isDark ? 0.10 : 0.055),
+                color: avatarColor.withValues(alpha: isDark ? 0.12 : 0.06),
                 shape: BoxShape.circle,
               ),
             ),
@@ -186,15 +221,15 @@ class _DepoimentosHomeState extends State<DepoimentosHome> {
               Row(
                 children: [
                   Container(
-                    width: 43,
-                    height: 43,
+                    width: 44,
+                    height: 44,
                     decoration: BoxDecoration(
                       color: avatarColor,
                       shape: BoxShape.circle,
                       boxShadow: [
                         BoxShadow(
-                          color: avatarColor.withValues(alpha: 0.18),
-                          blurRadius: 9,
+                          color: avatarColor.withValues(alpha: 0.25),
+                          blurRadius: 10,
                           offset: const Offset(0, 4),
                         ),
                       ],
@@ -210,7 +245,7 @@ class _DepoimentosHomeState extends State<DepoimentosHome> {
                       ),
                     ),
                   ),
-                  const SizedBox(width: 11),
+                  const SizedBox(width: 12),
                   Expanded(
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -220,7 +255,7 @@ class _DepoimentosHomeState extends State<DepoimentosHome> {
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
                           style: TextStyle(
-                            fontSize: 14,
+                            fontSize: 13.5,
                             fontWeight: FontWeight.w800,
                             color: nameColor,
                           ),
@@ -234,7 +269,7 @@ class _DepoimentosHomeState extends State<DepoimentosHome> {
                               child: Icon(
                                 Icons.star_rounded,
                                 color: CoresApp.warning,
-                                size: 14,
+                                size: 13,
                               ),
                             ),
                           ),
@@ -242,20 +277,31 @@ class _DepoimentosHomeState extends State<DepoimentosHome> {
                       ],
                     ),
                   ),
-                  const Icon(
-                    Icons.format_quote_rounded,
-                    color: CoresApp.secondaryLight,
-                    size: 25,
+                  Container(
+                    width: 32,
+                    height: 32,
+                    decoration: BoxDecoration(
+                      color: avatarColor.withValues(alpha: 0.12),
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    child: Icon(
+                      Icons.format_quote_rounded,
+                      color: avatarColor,
+                      size: 18,
+                    ),
                   ),
                 ],
               ),
-              const SizedBox(height: 13),
+              const SizedBox(height: 14),
               Container(
                 width: double.infinity,
-                padding: const EdgeInsets.all(11),
+                padding: const EdgeInsets.all(12),
                 decoration: BoxDecoration(
-                  color: avatarColor.withValues(alpha: isDark ? 0.12 : 0.055),
-                  borderRadius: BorderRadius.circular(13),
+                  color: avatarColor.withValues(alpha: isDark ? 0.14 : 0.06),
+                  borderRadius: BorderRadius.circular(14),
+                  border: Border.all(
+                    color: avatarColor.withValues(alpha: isDark ? 0.15 : 0.08),
+                  ),
                 ),
                 child: Text(
                   text,
@@ -263,8 +309,9 @@ class _DepoimentosHomeState extends State<DepoimentosHome> {
                   overflow: TextOverflow.ellipsis,
                   style: TextStyle(
                     fontSize: 12,
-                    height: 1.45,
+                    height: 1.5,
                     color: textColor,
+                    fontWeight: FontWeight.w500,
                   ),
                 ),
               ),
@@ -286,10 +333,10 @@ class _DepoimentosHomeState extends State<DepoimentosHome> {
         (index) => AnimatedContainer(
           duration: const Duration(milliseconds: 250),
           margin: const EdgeInsets.symmetric(horizontal: 3),
-          width: _currentPage == index ? 22 : 7,
+          width: _currentPage == index ? 24 : 7,
           height: 7,
           decoration: BoxDecoration(
-            color: _currentPage == index ? CoresApp.primary : inactiveColor,
+            color: _currentPage == index ? CoresApp.primaryDark : inactiveColor,
             borderRadius: BorderRadius.circular(5),
           ),
         ),

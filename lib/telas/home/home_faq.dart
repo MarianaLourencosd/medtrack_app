@@ -39,27 +39,62 @@ class _FAQHomeState extends State<FAQHome> {
   @override
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
-    final tituloColor =
-        isDark ? CoresApp.darkTextPrimary : CoresApp.textPrimary;
-    final subtituloColor =
-        isDark ? CoresApp.darkTextSecondary : CoresApp.textSecondary;
+    final tituloColor = isDark ? CoresApp.darkTextPrimary : CoresApp.textPrimary;
+    final subtituloColor = isDark ? CoresApp.darkTextSecondary : CoresApp.textSecondary;
 
     return Padding(
       padding: const EdgeInsets.fromLTRB(18, 4, 18, 30),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(
-            'Perguntas frequentes',
-            style: AppTextStyles.tituloSecao.copyWith(color: tituloColor),
+          Row(
+            children: [
+              Container(
+                width: 4,
+                height: 22,
+                decoration: BoxDecoration(
+                  color: CoresApp.primaryDark,
+                  borderRadius: BorderRadius.circular(2),
+                ),
+              ),
+              const SizedBox(width: 10),
+              Expanded(
+                child: Text(
+                  'Perguntas frequentes',
+                  style: AppTextStyles.tituloSecao.copyWith(color: tituloColor),
+                ),
+              ),
+            ],
           ),
-          const SizedBox(height: 4),
-          Text(
-            'Tire suas dúvidas rápidas',
-            style:
-                AppTextStyles.subtituloSecao.copyWith(color: subtituloColor),
+          const SizedBox(height: 6),
+          Padding(
+            padding: const EdgeInsets.only(left: 14),
+            child: Row(
+              children: [
+                Container(
+                  width: 6,
+                  height: 6,
+                  decoration: BoxDecoration(
+                    color: CoresApp.primaryDark,
+                    shape: BoxShape.circle,
+                  ),
+                ),
+                const SizedBox(width: 6),
+                Expanded(
+                  child: Text(
+                    'Tire suas dúvidas rápidas',
+                    style: AppTextStyles.micro.copyWith(
+                      color: subtituloColor,
+                      fontWeight: FontWeight.w500,
+                      fontSize: 11.5,
+                      letterSpacing: 0.1,
+                    ),
+                  ),
+                ),
+              ],
+            ),
           ),
-          const SizedBox(height: 13),
+          const SizedBox(height: 16),
           _buildList(context),
         ],
       ),
@@ -95,10 +130,8 @@ class _FAQHomeState extends State<FAQHome> {
     final isDark = Theme.of(context).brightness == Brightness.dark;
     final cardColor = isDark ? CoresApp.darkSurface : CoresApp.surface;
     final borderColor = isDark ? CoresApp.darkBorder : CoresApp.greyLight;
-    final perguntaColor =
-        isDark ? CoresApp.darkTextPrimary : CoresApp.textPrimary;
-    final respostaColor =
-        isDark ? CoresApp.darkTextSecondary : CoresApp.textSecondary;
+    final perguntaColor = isDark ? CoresApp.darkTextPrimary : CoresApp.textPrimary;
+    final respostaColor = isDark ? CoresApp.darkTextSecondary : CoresApp.textSecondary;
     final expandido = _aberto == index;
 
     return Material(
@@ -108,8 +141,8 @@ class _FAQHomeState extends State<FAQHome> {
           setState(() => _aberto = expandido ? -1 : index);
         },
         borderRadius: BorderRadius.circular(20),
-        splashColor: CoresApp.primary.withValues(alpha: 0.06),
-        highlightColor: CoresApp.primary.withValues(alpha: 0.03),
+        splashColor: CoresApp.primaryDark.withValues(alpha: 0.06),
+        highlightColor: CoresApp.primaryDark.withValues(alpha: 0.03),
         child: AnimatedContainer(
           duration: const Duration(milliseconds: 220),
           width: double.infinity,
@@ -119,7 +152,7 @@ class _FAQHomeState extends State<FAQHome> {
             borderRadius: BorderRadius.circular(20),
             border: Border.all(
               color: expandido
-                  ? CoresApp.primary.withValues(alpha: 0.45)
+                  ? CoresApp.primaryDark.withValues(alpha: 0.45)
                   : borderColor,
             ),
             boxShadow: [
@@ -139,12 +172,12 @@ class _FAQHomeState extends State<FAQHome> {
                     width: 38,
                     height: 38,
                     decoration: BoxDecoration(
-                      color: CoresApp.primary.withValues(alpha: 0.10),
+                      color: CoresApp.primaryDark.withValues(alpha: 0.10),
                       borderRadius: BorderRadius.circular(12),
                     ),
                     child: const Icon(
                       Icons.help_outline_rounded,
-                      color: CoresApp.primary,
+                      color: CoresApp.primaryDark,
                       size: 19,
                     ),
                   ),
@@ -167,7 +200,7 @@ class _FAQHomeState extends State<FAQHome> {
                     duration: const Duration(milliseconds: 220),
                     child: const Icon(
                       Icons.keyboard_arrow_down_rounded,
-                      color: CoresApp.primary,
+                      color: CoresApp.primaryDark,
                       size: 24,
                     ),
                   ),

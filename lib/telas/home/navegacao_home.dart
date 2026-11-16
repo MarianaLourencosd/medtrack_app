@@ -16,10 +16,8 @@ class NavegacaoHome extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
-    final tituloColor =
-        isDark ? CoresApp.darkTextPrimary : CoresApp.textPrimary;
-    final subtituloColor =
-        isDark ? CoresApp.darkTextSecondary : CoresApp.textSecondary;
+    final tituloColor = isDark ? CoresApp.darkTextPrimary : CoresApp.textPrimary;
+    final subtituloColor = isDark ? CoresApp.darkTextSecondary : CoresApp.textSecondary;
 
     return Padding(
       padding: const EdgeInsets.fromLTRB(18, 4, 18, 24),
@@ -32,7 +30,7 @@ class NavegacaoHome extends StatelessWidget {
             tituloColor: tituloColor,
             subtituloColor: subtituloColor,
           ),
-          const SizedBox(height: 13),
+          const SizedBox(height: 14),
           _buildFormCard(),
         ],
       ),
@@ -50,23 +48,54 @@ class NavegacaoHome extends StatelessWidget {
       children: [
         Row(
           children: [
+            Container(
+              width: 4,
+              height: 20,
+              decoration: BoxDecoration(
+                color: CoresApp.primary,
+                borderRadius: BorderRadius.circular(2),
+              ),
+            ),
+            const SizedBox(width: 10),
             Expanded(
               child: Text(
                 title,
-                style:
-                    AppTextStyles.tituloSecao.copyWith(color: tituloColor),
+                style: AppTextStyles.tituloSecao.copyWith(color: tituloColor),
               ),
             ),
-            Text(action, style: AppTextStyles.acaoSecao),
-            const SizedBox(width: 2),
-            const Icon(Icons.chevron_right_rounded,
-                color: CoresApp.primary, size: 18),
+            GestureDetector(
+              onTap: () => onNavigate('Formulário'),
+              child: Container(
+                padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
+                decoration: BoxDecoration(
+                  color: CoresApp.primary.withValues(alpha: 0.10),
+                  borderRadius: BorderRadius.circular(100),
+                ),
+                child: Row(
+                  children: [
+                    Text(
+                      action,
+                      style: AppTextStyles.micro.copyWith(
+                        color: CoresApp.primary,
+                        fontWeight: FontWeight.w800,
+                        fontSize: 11,
+                      ),
+                    ),
+                    const SizedBox(width: 2),
+                    const Icon(Icons.chevron_right_rounded, color: CoresApp.primary, size: 15),
+                  ],
+                ),
+              ),
+            ),
           ],
         ),
-        const SizedBox(height: 4),
-        Text(
-          'Preencha seus dados de saúde',
-          style: AppTextStyles.subtituloSecao.copyWith(color: subtituloColor),
+        const SizedBox(height: 6),
+        Padding(
+          padding: const EdgeInsets.only(left: 14),
+          child: Text(
+            'Preencha seus dados de saúde',
+            style: AppTextStyles.subtituloSecao.copyWith(color: subtituloColor),
+          ),
         ),
       ],
     );
@@ -78,15 +107,18 @@ class NavegacaoHome extends StatelessWidget {
       label: 'Formulário de saúde. Preencha seus dados de saúde',
       child: Container(
         width: double.infinity,
-        height: 132,
         decoration: BoxDecoration(
-          color: CoresApp.primary,
+          gradient: LinearGradient(
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
+            colors: [CoresApp.primary, CoresApp.primaryDark],
+          ),
           borderRadius: BorderRadius.circular(26),
           boxShadow: [
             BoxShadow(
-              color: CoresApp.primary.withValues(alpha: 0.18),
-              blurRadius: 18,
-              offset: const Offset(0, 7),
+              color: CoresApp.primary.withValues(alpha: 0.25),
+              blurRadius: 20,
+              offset: const Offset(0, 10),
             ),
           ],
         ),
@@ -100,83 +132,94 @@ class NavegacaoHome extends StatelessWidget {
             child: Stack(
               children: [
                 Positioned(
-                  top: -45,
-                  right: -25,
+                  top: -50,
+                  right: -30,
                   child: Container(
-                    width: 125,
-                    height: 125,
+                    width: 140,
+                    height: 140,
                     decoration: BoxDecoration(
-                      color: CoresApp.white.withValues(alpha: 0.07),
+                      color: CoresApp.white.withValues(alpha: 0.08),
                       shape: BoxShape.circle,
                     ),
                   ),
                 ),
                 Positioned(
-                  bottom: -48,
-                  left: 95,
+                  bottom: -55,
+                  left: 80,
                   child: Container(
-                    width: 105,
-                    height: 105,
+                    width: 120,
+                    height: 120,
                     decoration: BoxDecoration(
-                      color: CoresApp.secondary.withValues(alpha: 0.15),
+                      color: CoresApp.white.withValues(alpha: 0.05),
                       shape: BoxShape.circle,
                     ),
                   ),
                 ),
                 Padding(
-                  padding: const EdgeInsets.all(17),
-                  child: Row(
+                  padding: const EdgeInsets.all(20),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Container(
-                        width: 50,
-                        height: 50,
-                        decoration: BoxDecoration(
-                          color: CoresApp.white.withValues(alpha: 0.14),
-                          borderRadius: BorderRadius.circular(16),
-                        ),
-                        child: const Icon(Icons.favorite_rounded,
-                            color: CoresApp.white, size: 25),
-                      ),
-                      const SizedBox(width: 14),
-                      const Expanded(
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              'Formulário de saúde',
-                              maxLines: 1,
-                              overflow: TextOverflow.ellipsis,
-                              style: TextStyle(
-                                fontSize: 15.5,
-                                fontWeight: FontWeight.w800,
-                                color: CoresApp.white,
+                      Row(
+                        children: [
+                          Container(
+                            width: 56,
+                            height: 56,
+                            decoration: BoxDecoration(
+                              color: CoresApp.white.withValues(alpha: 0.18),
+                              borderRadius: BorderRadius.circular(18),
+                              border: Border.all(
+                                color: CoresApp.white.withValues(alpha: 0.25),
+                                width: 1.5,
                               ),
                             ),
-                            SizedBox(height: 5),
-                            Text(
-                              'Preencha seus dados e acompanhe seu bem-estar.',
-                              maxLines: 2,
-                              overflow: TextOverflow.ellipsis,
-                              style: TextStyle(
-                                fontSize: 10.5,
-                                height: 1.35,
-                                color: CoresApp.white,
-                              ),
+                            child: const Icon(Icons.favorite_rounded, color: CoresApp.white, size: 28),
+                          ),
+                          const SizedBox(width: 14),
+                          const Expanded(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  'Formulário de saúde',
+                                  style: TextStyle(
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.w800,
+                                    color: CoresApp.white,
+                                    letterSpacing: -0.2,
+                                  ),
+                                ),
+                                SizedBox(height: 4),
+                                Text(
+                                  'Preencha seus dados e acompanhe seu bem-estar.',
+                                  style: TextStyle(
+                                    fontSize: 11,
+                                    height: 1.4,
+                                    color: CoresApp.white,
+                                  ),
+                                ),
+                              ],
                             ),
-                          ],
-                        ),
+                          ),
+                        ],
                       ),
-                      const SizedBox(width: 8),
-                      Container(
-                        width: 34,
-                        height: 34,
-                        decoration: BoxDecoration(
-                          color: CoresApp.white.withValues(alpha: 0.13),
-                          shape: BoxShape.circle,
-                        ),
-                        child: const Icon(Icons.arrow_forward_rounded,
-                            color: CoresApp.white, size: 17),
+                      const SizedBox(height: 16),
+                      Row(
+                        children: [
+                          _buildInfoChip(Icons.check_circle_rounded, 'Rápido'),
+                          const SizedBox(width: 8),
+                          _buildInfoChip(Icons.shield_rounded, 'Seguro'),
+                          const Spacer(),
+                          Container(
+                            width: 40,
+                            height: 40,
+                            decoration: BoxDecoration(
+                              color: CoresApp.white.withValues(alpha: 0.18),
+                              borderRadius: BorderRadius.circular(14),
+                            ),
+                            child: const Icon(Icons.arrow_forward_rounded, color: CoresApp.white, size: 20),
+                          ),
+                        ],
                       ),
                     ],
                   ),
@@ -185,6 +228,31 @@ class NavegacaoHome extends StatelessWidget {
             ),
           ),
         ),
+      ),
+    );
+  }
+
+  Widget _buildInfoChip(IconData icone, String texto) {
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
+      decoration: BoxDecoration(
+        color: CoresApp.white.withValues(alpha: 0.15),
+        borderRadius: BorderRadius.circular(100),
+      ),
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Icon(icone, color: CoresApp.white, size: 12),
+          const SizedBox(width: 5),
+          Text(
+            texto,
+            style: const TextStyle(
+              fontSize: 10,
+              fontWeight: FontWeight.w700,
+              color: CoresApp.white,
+            ),
+          ),
+        ],
       ),
     );
   }

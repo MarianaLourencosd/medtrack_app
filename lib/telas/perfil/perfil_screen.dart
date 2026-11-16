@@ -17,8 +17,6 @@ class _TelaPerfilState extends State<TelaPerfil> {
   Map<String, dynamic>? _userData;
   bool _isLoading = true;
 
-  // ---------- Paleta (acompanha o tema claro/escuro) ----------
-
   bool get _isDark => Theme.of(context).brightness == Brightness.dark;
 
   Color get _corFundo => _isDark
@@ -323,7 +321,7 @@ class _TelaPerfilState extends State<TelaPerfil> {
       ),
       child: Stack(
         children: [
-          // Faixa decorativa no topo
+
           Positioned(
             top: 0,
             left: 0,

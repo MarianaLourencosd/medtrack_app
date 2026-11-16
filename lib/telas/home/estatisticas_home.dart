@@ -8,7 +8,7 @@ class EstatisticasHome extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
-    final bg = isDark ? CoresApp.darkSurface : CoresApp.primary;
+    final bg = isDark ? CoresApp.darkSurface : CoresApp.primaryDark;
 
     return Padding(
       padding: const EdgeInsets.fromLTRB(18, 0, 18, 20),
@@ -17,12 +17,12 @@ class EstatisticasHome extends StatelessWidget {
         padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 20),
         decoration: BoxDecoration(
           color: bg,
-          borderRadius: BorderRadius.circular(25),
+          borderRadius: BorderRadius.circular(24),
           boxShadow: [
             BoxShadow(
-              color: CoresApp.primary.withValues(alpha: isDark ? 0.22 : 0.18),
-              blurRadius: 17,
-              offset: const Offset(0, 7),
+              color: CoresApp.primaryDark.withValues(alpha: isDark ? 0.25 : 0.20),
+              blurRadius: 18,
+              offset: const Offset(0, 8),
             ),
           ],
         ),
@@ -36,7 +36,7 @@ class EstatisticasHome extends StatelessWidget {
                 width: 125,
                 height: 125,
                 decoration: BoxDecoration(
-                  color: CoresApp.white.withValues(alpha: 0.07),
+                  color: CoresApp.white.withValues(alpha: 0.08),
                   shape: BoxShape.circle,
                 ),
               ),
@@ -48,7 +48,7 @@ class EstatisticasHome extends StatelessWidget {
                 width: 115,
                 height: 115,
                 decoration: BoxDecoration(
-                  color: CoresApp.secondary.withValues(alpha: 0.12),
+                  color: CoresApp.white.withValues(alpha: 0.05),
                   shape: BoxShape.circle,
                 ),
               ),
@@ -64,8 +64,8 @@ class EstatisticasHome extends StatelessWidget {
                 ),
                 Container(
                   width: 1,
-                  height: 48,
-                  color: CoresApp.white.withValues(alpha: 0.16),
+                  height: 52,
+                  color: CoresApp.white.withValues(alpha: 0.20),
                 ),
                 Expanded(
                   child: _buildItem(
@@ -76,8 +76,8 @@ class EstatisticasHome extends StatelessWidget {
                 ),
                 Container(
                   width: 1,
-                  height: 48,
-                  color: CoresApp.white.withValues(alpha: 0.16),
+                  height: 52,
+                  color: CoresApp.white.withValues(alpha: 0.20),
                 ),
                 Expanded(
                   child: _buildItem(
@@ -103,32 +103,38 @@ class EstatisticasHome extends StatelessWidget {
       mainAxisSize: MainAxisSize.min,
       children: [
         Container(
-          width: 34,
-          height: 34,
+          width: 38,
+          height: 38,
           decoration: BoxDecoration(
-            color: CoresApp.white.withValues(alpha: 0.13),
-            borderRadius: BorderRadius.circular(11),
+            color: CoresApp.white.withValues(alpha: 0.15),
+            borderRadius: BorderRadius.circular(12),
+            border: Border.all(
+              color: CoresApp.white.withValues(alpha: 0.20),
+              width: 1,
+            ),
           ),
-          child: Icon(icon, color: CoresApp.white, size: 17),
+          child: Icon(icon, color: CoresApp.white, size: 19),
         ),
-        const SizedBox(height: 8),
+        const SizedBox(height: 10),
         Text(
           number,
           style: const TextStyle(
-            fontSize: 20,
+            fontSize: 21,
             fontWeight: FontWeight.w800,
             color: CoresApp.white,
+            letterSpacing: -0.3,
           ),
         ),
-        const SizedBox(height: 2),
+        const SizedBox(height: 3),
         Text(
           label,
           textAlign: TextAlign.center,
           maxLines: 2,
           style: TextStyle(
-            fontSize: 9.5,
+            fontSize: 10,
             height: 1.2,
-            color: CoresApp.white.withValues(alpha: 0.78),
+            fontWeight: FontWeight.w600,
+            color: CoresApp.white.withValues(alpha: 0.85),
           ),
         ),
       ],

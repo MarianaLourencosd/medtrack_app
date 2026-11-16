@@ -4,7 +4,6 @@ import '../constantes/cores.dart';
 import '../constantes/estilos_texto.dart';
 import '../modelos/perfil_publico.dart';
 
-/// Conteúdo compartilhado entre a prévia em bottom sheet e a tela de perfil.
 class PerfilPublicoConteudo extends StatelessWidget {
   const PerfilPublicoConteudo({
     super.key,
@@ -24,7 +23,6 @@ class PerfilPublicoConteudo extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.stretch,
       mainAxisSize: MainAxisSize.min,
       children: [
-        // Cabeçalho do perfil (com informações principais)
         _Cabecalho(
           nome: nome,
           iniciais: _iniciais(nome),
@@ -54,10 +52,7 @@ class PerfilPublicoConteudo extends StatelessWidget {
               ),
           ],
         ),
-
         SizedBox(height: compacto ? 14 : 18),
-
-        // Informações médicas
         _BlocoInformacoes(
           titulo: 'Informações médicas',
           subtitulo: 'Dados importantes sobre sua saúde',
@@ -82,10 +77,7 @@ class PerfilPublicoConteudo extends StatelessWidget {
             ),
           ],
         ),
-
         const SizedBox(height: 14),
-
-        // Contato de emergência
         _BlocoInformacoes(
           titulo: 'Contato de emergência',
           subtitulo: 'Pessoa para contato em situações urgentes',
@@ -116,9 +108,7 @@ class PerfilPublicoConteudo extends StatelessWidget {
 
   static String? _texto(dynamic valor) {
     if (valor == null) return null;
-
     final texto = valor.toString().trim();
-
     return texto.isEmpty ? null : texto;
   }
 
@@ -130,16 +120,13 @@ class PerfilPublicoConteudo extends StatelessWidget {
         .toList();
 
     if (partes.isEmpty) return 'MT';
-
     if (partes.length == 1) {
       return partes.first.substring(0, 1).toUpperCase();
     }
-
     return '${partes.first[0]}${partes.last[0]}'.toUpperCase();
   }
 }
 
-/// Cores derivadas do tema, centralizadas para manter tudo consistente.
 class _Paleta {
   const _Paleta({
     required this.isDark,
@@ -175,7 +162,7 @@ class _Paleta {
       ? const []
       : [
           BoxShadow(
-            color: const Color(0xFF1E1A33).withOpacity(0.06),
+            color: const Color(0xFF1E1A33).withValues(alpha: 0.06),
             blurRadius: 18,
             offset: const Offset(0, 6),
           ),
@@ -212,7 +199,6 @@ class _Cabecalho extends StatelessWidget {
       ),
       child: Stack(
         children: [
-          // Faixa decorativa no topo
           Positioned(
             top: 0,
             left: 0,
@@ -231,7 +217,6 @@ class _Cabecalho extends StatelessWidget {
               ),
             ),
           ),
-
           SizedBox(
             width: double.infinity,
             child: Padding(
@@ -243,7 +228,6 @@ class _Cabecalho extends StatelessWidget {
               ),
               child: Column(
                 children: [
-                  // Avatar com anel na cor da superfície
                   Container(
                     padding: const EdgeInsets.all(4),
                     decoration: BoxDecoration(
@@ -252,7 +236,7 @@ class _Cabecalho extends StatelessWidget {
                       boxShadow: [
                         BoxShadow(
                           color: Colors.black
-                              .withOpacity(paleta.isDark ? 0.30 : 0.08),
+                              .withValues(alpha: paleta.isDark ? 0.30 : 0.08),
                           blurRadius: 12,
                           offset: const Offset(0, 4),
                         ),
@@ -272,9 +256,7 @@ class _Cabecalho extends StatelessWidget {
                       ),
                     ),
                   ),
-
                   SizedBox(height: compacto ? 12 : 16),
-
                   Text(
                     nome,
                     textAlign: TextAlign.center,
@@ -289,11 +271,8 @@ class _Cabecalho extends StatelessWidget {
                       height: 1.25,
                     ),
                   ),
-
                   const SizedBox(height: 8),
-
                   _Selo(paleta: paleta),
-
                   if (chips.isNotEmpty) ...[
                     SizedBox(height: compacto ? 14 : 18),
                     Wrap(
@@ -323,13 +302,13 @@ class _Selo extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
       decoration: BoxDecoration(
-        color: CoresApp.primary.withOpacity(paleta.isDark ? 0.18 : 0.08),
+        color: CoresApp.primary.withValues(alpha: paleta.isDark ? 0.18 : 0.08),
         borderRadius: BorderRadius.circular(30),
       ),
       child: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
-          Icon(
+          const Icon(
             Icons.health_and_safety_outlined,
             size: 14,
             color: CoresApp.primary,
@@ -402,8 +381,8 @@ class _BlocoInformacoes extends StatelessWidget {
                     begin: Alignment.topLeft,
                     end: Alignment.bottomRight,
                     colors: [
-                      cor.withOpacity(paleta.isDark ? 0.24 : 0.16),
-                      cor.withOpacity(paleta.isDark ? 0.10 : 0.06),
+                      cor.withValues(alpha: paleta.isDark ? 0.24 : 0.16),
+                      cor.withValues(alpha: paleta.isDark ? 0.10 : 0.06),
                     ],
                   ),
                   borderRadius: BorderRadius.circular(14),
@@ -438,11 +417,8 @@ class _BlocoInformacoes extends StatelessWidget {
               ),
             ],
           ),
-
           const SizedBox(height: 14),
-
           Divider(height: 1, thickness: 1, color: paleta.divisor),
-
           for (var i = 0; i < visiveis.length; i++) ...[
             _LinhaInfo(item: visiveis[i], cor: cor, paleta: paleta),
             if (i != visiveis.length - 1)
@@ -481,7 +457,7 @@ class _LinhaInfo extends StatelessWidget {
             width: 34,
             height: 34,
             decoration: BoxDecoration(
-              color: cor.withOpacity(paleta.isDark ? 0.14 : 0.07),
+              color: cor.withValues(alpha: paleta.isDark ? 0.14 : 0.07),
               borderRadius: BorderRadius.circular(10),
             ),
             child: Icon(item.icone, size: 17, color: cor),
@@ -539,10 +515,10 @@ class _ChipInfo extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
       decoration: BoxDecoration(
-        color: isDark ? cor.withOpacity(0.16) : fundo,
+        color: isDark ? cor.withValues(alpha: 0.16) : fundo,
         borderRadius: BorderRadius.circular(30),
         border: Border.all(
-          color: cor.withOpacity(isDark ? 0.28 : 0.16),
+          color: cor.withValues(alpha: isDark ? 0.28 : 0.16),
         ),
       ),
       child: Row(

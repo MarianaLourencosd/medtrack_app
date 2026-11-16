@@ -16,27 +16,62 @@ class RecursosHome extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
-    final tituloColor =
-        isDark ? CoresApp.darkTextPrimary : CoresApp.textPrimary;
-    final subtituloColor =
-        isDark ? CoresApp.darkTextSecondary : CoresApp.textSecondary;
+    final tituloColor = isDark ? CoresApp.darkTextPrimary : CoresApp.textPrimary;
+    final subtituloColor = isDark ? CoresApp.darkTextSecondary : CoresApp.textSecondary;
 
     return Padding(
       padding: const EdgeInsets.fromLTRB(18, 4, 18, 30),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(
-            'Recursos',
-            style: AppTextStyles.tituloSecao.copyWith(color: tituloColor),
+          Row(
+            children: [
+              Container(
+                width: 4,
+                height: 22,
+                decoration: BoxDecoration(
+                  color: CoresApp.primaryDark,
+                  borderRadius: BorderRadius.circular(2),
+                ),
+              ),
+              const SizedBox(width: 10),
+              Expanded(
+                child: Text(
+                  'Recursos',
+                  style: AppTextStyles.tituloSecao.copyWith(color: tituloColor),
+                ),
+              ),
+            ],
           ),
-          const SizedBox(height: 4),
-          Text(
-            'Ferramentas úteis para o dia a dia',
-            style:
-                AppTextStyles.subtituloSecao.copyWith(color: subtituloColor),
+          const SizedBox(height: 6),
+          Padding(
+            padding: const EdgeInsets.only(left: 14),
+            child: Row(
+              children: [
+                Container(
+                  width: 6,
+                  height: 6,
+                  decoration: BoxDecoration(
+                    color: CoresApp.primaryDark,
+                    shape: BoxShape.circle,
+                  ),
+                ),
+                const SizedBox(width: 6),
+                Expanded(
+                  child: Text(
+                    'Ferramentas úteis para o dia a dia',
+                    style: AppTextStyles.micro.copyWith(
+                      color: subtituloColor,
+                      fontWeight: FontWeight.w500,
+                      fontSize: 11.5,
+                      letterSpacing: 0.1,
+                    ),
+                  ),
+                ),
+              ],
+            ),
           ),
-          const SizedBox(height: 13),
+          const SizedBox(height: 16),
           _buildResourcesCard(context),
         ],
       ),
@@ -51,12 +86,12 @@ class RecursosHome extends StatelessWidget {
       width: double.infinity,
       decoration: BoxDecoration(
         color: cardColor,
-        borderRadius: BorderRadius.circular(28),
+        borderRadius: BorderRadius.circular(24),
         boxShadow: [
           BoxShadow(
-            color: CoresApp.primary.withValues(alpha: isDark ? 0.18 : 0.08),
-            blurRadius: 17,
-            offset: const Offset(0, 7),
+            color: CoresApp.primaryDark.withValues(alpha: isDark ? 0.20 : 0.08),
+            blurRadius: 16,
+            offset: const Offset(0, 6),
           ),
         ],
       ),
@@ -70,7 +105,7 @@ class RecursosHome extends StatelessWidget {
               width: 125,
               height: 125,
               decoration: BoxDecoration(
-                color: CoresApp.mint.withValues(alpha: isDark ? 0.18 : 0.85),
+                color: CoresApp.mint.withValues(alpha: isDark ? 0.15 : 0.50),
                 shape: BoxShape.circle,
               ),
             ),
@@ -82,14 +117,13 @@ class RecursosHome extends StatelessWidget {
               width: 110,
               height: 110,
               decoration: BoxDecoration(
-                color:
-                    CoresApp.softGreen.withValues(alpha: isDark ? 0.18 : 0.9),
+                color: CoresApp.softGreen.withValues(alpha: isDark ? 0.15 : 0.60),
                 shape: BoxShape.circle,
               ),
             ),
           ),
           Padding(
-            padding: const EdgeInsets.all(16),
+            padding: const EdgeInsets.all(14),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -135,12 +169,22 @@ class RecursosHome extends StatelessWidget {
                 const SizedBox(height: 9),
                 _buildResourceItem(
                   context: context,
-                  icon: Icons.phone_rounded,
-                  label: 'Contato',
-                  description: 'Acesse seus contatos importantes',
+                  icon: Icons.lightbulb_rounded,
+                  label: 'Dicas',
+                  description: 'Dicas de saúde para o dia a dia',
+                  color: CoresApp.warning,
+                  background: CoresApp.softYellow,
+                  route: 'Dicas',
+                ),
+                const SizedBox(height: 9),
+                _buildResourceItem(
+                  context: context,
+                  icon: Icons.quiz_rounded,
+                  label: 'Quiz',
+                  description: 'Teste seus conhecimentos de saúde',
                   color: CoresApp.secondary,
                   background: CoresApp.paleGreen,
-                  route: 'Contato',
+                  route: 'Quiz',
                 ),
               ],
             ),
@@ -161,27 +205,31 @@ class RecursosHome extends StatelessWidget {
   }) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
     final itemColor = isDark ? CoresApp.darkSurfaceAlt : CoresApp.white;
-    final labelColor =
-        isDark ? CoresApp.darkTextPrimary : CoresApp.textPrimary;
+    final labelColor = isDark ? CoresApp.darkTextPrimary : CoresApp.textPrimary;
     final descColor = isDark ? CoresApp.darkTextMuted : CoresApp.textMuted;
 
     return Material(
       color: Colors.transparent,
       child: InkWell(
         onTap: () => onNavigate(route),
-        borderRadius: BorderRadius.circular(19),
-        splashColor: CoresApp.primary.withValues(alpha: 0.06),
-        highlightColor: CoresApp.primary.withValues(alpha: 0.03),
+        borderRadius: BorderRadius.circular(18),
+        splashColor: CoresApp.primaryDark.withValues(alpha: 0.06),
+        highlightColor: CoresApp.primaryDark.withValues(alpha: 0.03),
         child: Container(
           padding: const EdgeInsets.all(12),
           decoration: BoxDecoration(
             color: itemColor,
-            borderRadius: BorderRadius.circular(19),
+            borderRadius: BorderRadius.circular(18),
             border: Border.all(
-              color: isDark
-                  ? CoresApp.darkBorder
-                  : color.withValues(alpha: 0.10),
+              color: isDark ? CoresApp.darkBorder : CoresApp.greyLight,
             ),
+            boxShadow: [
+              BoxShadow(
+                color: CoresApp.black.withValues(alpha: isDark ? 0.15 : 0.03),
+                blurRadius: 10,
+                offset: const Offset(0, 3),
+              ),
+            ],
           ),
           child: Row(
             children: [
@@ -230,8 +278,7 @@ class RecursosHome extends StatelessWidget {
                   color: background,
                   shape: BoxShape.circle,
                 ),
-                child:
-                    Icon(Icons.chevron_right_rounded, color: color, size: 17),
+                child: Icon(Icons.chevron_right_rounded, color: color, size: 17),
               ),
             ],
           ),

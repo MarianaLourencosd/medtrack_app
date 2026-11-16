@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
+import '../quiz/quiz_screen.dart';
 import '../qrcode/qrcode_screen.dart';
 import '../pdf/pdf_screen.dart';
 import '../notificacoes/notificacoes_screen.dart';
 import '../compartilhar/compartilhar_screen.dart';
 import '../lembretes/lembretes_screen.dart';
+import '../dicas/dicas_screen.dart';
+import '../desafio/desafio_screen.dart';
 import 'cabecalho_inicio.dart';
 import 'navegacao_home.dart';
 import 'acoes_rapidas_home.dart';
@@ -27,7 +30,6 @@ import '../cadastro/signup_screen.dart';
 import '../perfil/perfil_screen.dart';
 import '../formulario/formulario_screen.dart';
 import '../emergencia/emergencia_screen.dart';
-import '../desafio/desafio_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -136,12 +138,16 @@ class _HomeScreenState extends State<HomeScreen> {
         return const CompartilharScreen();
       case 'Lembretes':
         return const LembretesScreen();
-      case 'Desafio':
-        return const DesafioScreen();
       case 'PDF':
         return const PdfScreen();
       case 'Notificações':
         return const NotificacoesScreen();
+      case 'Dicas':
+        return const DicasScreen();
+      case 'Desafio':
+        return const DesafioScreen();
+      case 'Quiz':
+        return const QuizScreen();
       case 'IMC':
         return const TelaImc();
       case 'Hospitais':

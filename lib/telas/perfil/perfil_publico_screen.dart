@@ -5,7 +5,6 @@ import '../../modelos/perfil_publico.dart';
 import '../../recursos/perfil_publico_conteudo.dart';
 import '../../servicos/servico_perfil.dart';
 
-/// Exibe o perfil de outro usuário aberto por QR Code ou deep link.
 class TelaPerfilPublico extends StatefulWidget {
   const TelaPerfilPublico({super.key, required this.uid});
 
@@ -35,7 +34,6 @@ class _TelaPerfilPublicoState extends State<TelaPerfilPublico> {
     try {
       await futuro;
     } catch (_) {
-      // O FutureBuilder apresenta o estado de erro.
     }
   }
 
@@ -191,7 +189,6 @@ class _Estado extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            // Ícone com halo duplo
             Container(
               padding: const EdgeInsets.all(12),
               decoration: BoxDecoration(
